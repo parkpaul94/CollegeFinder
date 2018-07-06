@@ -23,6 +23,10 @@ app.use(logger("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+};
+
 //Passport, express session and passport session
 app.use(session({ 
   secret: 'keyboard cat',
@@ -48,14 +52,13 @@ app.use(passport.session()); // persistent login sessions
 // require("./routes/api-routes-user&food")(app);
 // require("./routes/api-routes-meal")(app);
 // require('./routes/auth-api-routes')(app,passport);
-// require('./config/passport/passport')(passport, db.User);
+require('./config/passport/passport')(passport, db.User);
 
-
-mongoose.connect(config.test.databaseUrl, config.test.databaseOption).then(() => {
+mongoose.connect(process.env.MONGODB_URI || config.test.databaseUrl, config.test.databaseOption).then(() => {
   console.log('==> 🌎 MongoDB has been connected successfully!')
   app.listen(PORT, function(err) {
     if(!err) {
-      console.log("==> 🌎 Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
+      console.log(`==> 🌎 Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`);
     } else {
       console.log('Database has err: ', err)
     }
