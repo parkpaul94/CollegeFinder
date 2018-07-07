@@ -1,4 +1,13 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link as Linkthing,
+  Switch,
+  Redirect
+} from "react-router-dom";
+
+
 import logo from './logo.svg';
 import './App.css';
 
