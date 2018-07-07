@@ -58,7 +58,7 @@ mongoose.connect(process.env.MONGODB_URI || config.test.databaseUrl, config.test
   console.log('==> 🌎 MongoDB has been connected successfully!')
   app.listen(PORT, function(err) {
     if(!err) {
-      console.log(`==> 🌎 Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`);
+      console.log(`==> 🌎 Listening on port ${PORT}. Waiting for front end to call RESTful API of server`);
     } else {
       console.log('Database has err: ', err)
     }
