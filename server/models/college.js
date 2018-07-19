@@ -6,7 +6,7 @@ const CollegeSchema = new Schema({
     collegename: {
         type: String,
         trim: true,
-        required: "Username is Required"
+        required: "College Name is Required"
     },
 
 });

@@ -5,7 +5,8 @@ const isLoggedIn = require('../../middlewares/auth.js')
 module.exports = function (app, passport) {
 
     app.get('/', (req, res, next) => {
-        console.log('app.get called')
+        console.log('app.get called');
+        res.send('Express REST API');
     });
 
     app.get('/signup', authController.signup);

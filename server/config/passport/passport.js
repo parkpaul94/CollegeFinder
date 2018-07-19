@@ -9,14 +9,18 @@ module.exports = function (passport, user) {
 
     //Serialize Sessions User
     passport.serializeUser(function (user, done) {
-        // console.log('Serialize user called.');
-        done(null, user.id);
+        console.log('Serialize user called.');
+        console.log(user) // the whole raw user object!
+        console.log('---------')
+        done(null, {_id: user._id});
     });
 
     //Deserialize Session User 
     passport.deserializeUser(function (id, done) {
-        // console.log('Deserialize user called.');
-        User.findById(id).then(function (user) {
+        console.log('Deserialize user called.');
+        User.findOne(
+            {_id:id}
+            ).then(function (user) {
             if (user) {
                 done(null, user.get());
             } else {

@@ -13,6 +13,7 @@ const app = express();
 //Passport
 const passport = require('passport');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session)
 const flash = require('connect-flash');  
 
 //MongoDB
@@ -36,6 +37,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: true, 
   saveUninitialized:true,
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000
 })); // session secret
@@ -49,6 +51,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();
 });
+
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
