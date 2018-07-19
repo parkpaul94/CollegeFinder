@@ -1,11 +1,15 @@
 var exports = module.exports = {};
  
 exports.signup = function(req, res) {
-    console.log('signup API called')
+    res.json({
+        message: 'signup API called'
+    });
 };
 
 exports.signin = function(req, res) {
-    console.log('signin API called')
+    res.json({
+        message: 'signin API called'
+    });
 };
 
 exports.userloggedin = function(req, res) {
@@ -19,8 +23,12 @@ exports.userloggedin = function(req, res) {
 };
 
 exports.logout = function(req,res) {
-    req.session.destroy(function(err) {
-        res.redirect('/');
-    })
+	if (req.user) {
+		req.session.destroy();
+		res.clearCookie('connect.sid');
+		return res.json({ msg: 'logging you out' });
+	} else {
+		return res.json({ msg: 'no user to log out!' });
+	}
 };
 

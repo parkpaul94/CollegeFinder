@@ -12,15 +12,15 @@ module.exports = function (passport, user) {
         console.log('Serialize user called.');
         console.log(user) // the whole raw user object!
         console.log('---------')
-        done(null, {_id: user._id});
+        done(null, { _id: user._id });
     });
 
     //Deserialize Session User 
     passport.deserializeUser(function (id, done) {
         console.log('Deserialize user called.');
         User.findOne(
-            {_id:id}
-            ).then(function (user) {
+            { _id: id },
+        ).then(function (user) {
             if (user) {
                 done(null, user.get());
             } else {
@@ -39,26 +39,25 @@ module.exports = function (passport, user) {
         },
         (req, email, password, done) => {
 
-            console.log('\n local strategy called with: %s', typeof(email), ' : ',email, typeof(password), ' : ',password, '\n');
+            console.log('\n local strategy called with: %s', typeof (email), ' : ', email, typeof (password), ' : ', password, '\n');
 
             const generateHash = function (password) {
                 return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
             };
-            User.findOne({
-                where: {
-                    'email': email
-                }
-            }).then((user) => {
+            User.findOne(
+                { 'email': email }
+            ).then((user) => {
                 // if(err) return done(err);
-                if(user) {
-                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~',user.email);
+                if (user) {
+                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~', user.email);
                     return done(null, false, req.flash('signUpMessage', 'That email is already taken by others, please choose a different one'));
+                    
                 } else {
                     const userPassword = generateHash(password);
                     const data =
                         {
                             email: email,
-                            pass: userPassword,
+                            password: userPassword,
                             firstname: req.body.firstname,
                             lastname: req.body.lastname,
                             lastlogin_time: new Date()
@@ -88,20 +87,18 @@ module.exports = function (passport, user) {
             passReqToCallback: true,
         },
 
-        function(req,email,password,done) {
+        function (req, email, password, done) {
 
             const User = user;
-            const isValidPassword = function(userpass, password) {
-                return bCrypt.compareSync(password,userpass);
+            const isValidPassword = function (userpass, password) {
+                return bCrypt.compareSync(password, userpass);
             };
 
             // console.log('local strategy called with: %s', typeof(email), ' : ', email, typeof(password), ' : ',password);
 
-            User.findOne({
-                where: {
-                    'email':email
-                }
-            }).then( function(user) {
+            User.findOne(
+                { 'email': email }
+            ).then(function (user) {
                 if (!user) {
                     return done(null, false, req.flash('signInMessage', 'Email does not exist!'));
                 };
