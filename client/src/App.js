@@ -1,30 +1,22 @@
-import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link as Linkthing,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import React  from 'react';
 
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import logo from './logo.svg';
-import './App.css';
+import Login from './pages/Login';
+import SignupForm from './components/SignupForm'
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import NoMatch from './pages/NoMatch';
+
+const App = () => (
+  <Router>
+      <Switch>
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={SignupForm} />
+        {/* <Route exact path='/books' component={Books} />
+        <Route exact path='/books/:id' component={Detail} /> */}
+        <Route component={NoMatch} />
+      </Switch>
+  </Router>
+)
 
 export default App;
