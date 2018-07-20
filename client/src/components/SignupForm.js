@@ -23,11 +23,14 @@ class SignupForm extends Component {
 	}
 	handleSubmit(event) {
 		event.preventDefault()
-		// TODO - validate!
+
+
 		axios
 			.post('/auth/signup', {
-				username: this.state.username,
-				password: this.state.password
+				password: this.state.password,
+				email: this.state.email,
+				firstname: this.state.firstname,
+				lastname: this.state.lastname,
 			})
 			.then(response => {
 				console.log(response)

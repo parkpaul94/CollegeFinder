@@ -14,13 +14,6 @@ const UserSchema = new Schema({
     password: {
         type: String,
         trim: true,
-        required: "Password is Required",
-        // validate: [
-        //     function (input) {
-        //         return input.length >= 6;
-        //     },
-        //     "Password should be longer."
-        // ]
     },
 
     firstname: {
@@ -60,18 +53,6 @@ UserSchema.methods = {
 		return bcrypt.hashSync(plainTextPassword, 10)
 	}
 }
-
-UserSchema.pre('save', function(next) {
-	if (!this.password) {
-		console.log('=======NO PASSWORD PROVIDED=======')
-		next()
-	} else {
-		this.local.password = this.hashPassword(this.password)
-		next()
-	}
-	// this.password = this.hashPassword(this.password)
-	// next()
-})
 
 const User = mongoose.model("User", UserSchema);
 

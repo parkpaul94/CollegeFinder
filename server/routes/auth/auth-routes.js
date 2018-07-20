@@ -24,7 +24,7 @@ module.exports = function (app, passport) {
         // failureRedirect: '/signup',
         failureFlash: true
     }), (req, res) => {
-        res.render('/signup', {
+        res.json({
             message: req.flash('signUpMessage'),
         });
     });
@@ -36,7 +36,8 @@ module.exports = function (app, passport) {
         // failureRedirect: '/signin',
         failureFlash: true
     }),(req, res) => {
-        res.render('signin', {
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+        res.json({
             message: req.flash('signInMessage'),
         });
     });

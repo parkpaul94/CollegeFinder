@@ -8,7 +8,7 @@ module.exports = function (passport, user) {
     // const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
     //Serialize Sessions User
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser((user, done) => {
         console.log('Serialize user called.');
         console.log(user) // the whole raw user object!
         console.log('---------')
@@ -16,17 +16,18 @@ module.exports = function (passport, user) {
     });
 
     //Deserialize Session User 
-    passport.deserializeUser(function (id, done) {
+    passport.deserializeUser((id, done) => {
         console.log('Deserialize user called.');
         User.findOne(
             { _id: id },
-        ).then(function (user) {
-            if (user) {
-                done(null, user.get());
-            } else {
-                done(user.errors, null);
+            'username',
+            (err, user) => {
+                console.log('*** Deserialize user, user:')
+                console.log(user)
+                console.log('--------------')
+                done(null, user)
             }
-        });
+        )
     });
 
     //---------------------------Local SignUp Strategy-------------------------------------
@@ -41,8 +42,10 @@ module.exports = function (passport, user) {
 
             console.log('\n local strategy called with: %s', typeof (email), ' : ', email, typeof (password), ' : ', password, '\n');
 
-            const generateHash = function (password) {
-                return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+            const generateHash = function (pwd) {
+                return new Promise((resolve, reject) => {
+                    resolve(bCrypt.hashSync(pwd, bCrypt.genSaltSync(8), null));
+                })
             };
             User.findOne(
                 { 'email': email }
@@ -53,28 +56,35 @@ module.exports = function (passport, user) {
                     return done(null, false, req.flash('signUpMessage', 'That email is already taken by others, please choose a different one'));
                     
                 } else {
-                    const userPassword = generateHash(password);
-                    const data =
-                        {
-                            email: email,
-                            password: userPassword,
-                            firstname: req.body.firstname,
-                            lastname: req.body.lastname,
-                            lastlogin_time: new Date()
-                        };
-                    User.create(data).then(function (newUser, created) {
-                        if (!newUser) {
-                            return done(null, false);
-                        }
-                        if (newUser) {
-                            return done(null, newUser);
-                        }
-                    });
-                    console.log('\n New user successfully created...', data.email);
-                    console.log('\n New user password...' + userPassword + '\n');
+                    generateHash(password).then((res => {
+                        console.log(res);
+                        const userPassword = res;
+                        const data = 
+                            {
+                                email,
+                                password: userPassword,
+                                firstname: req.body.firstname,
+                                lastname: req.body.lastname,
+                                lastlogin_time: new Date()
+                            };
+                        console.log('\n New user successfully created...', data.email);
+                        console.log('\n New user password...' + userPassword + '\n');
+                        console.log(data);
+                        User.create(data).then(function (newUser) {
+                            console.log(newUser);
+                            if (!newUser) {
+                                return done(null, false);
+                            }
+                            if (newUser) {
+                                return done(null, newUser);
+                            }
+                        }).catch(err => {
+                            console.error('Signup MongoDB Create User Error: ', err)
+                        });
+                    }));
                 }
             }).catch(err => {
-                console.error('Signup Sequelize Error: ', err)
+                console.error('Signup MongoDB Check User Exist Error: ', err)
             });
         }
     ));
