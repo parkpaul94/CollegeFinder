@@ -13,9 +13,25 @@ mongoose.connect(
 	config.test.databaseOption
 );
 
-// console.log(idArr);
+function axiosOptions(urlInput) {
+    return {
+        method: 'get',
+        url: urlInput,
+        responseType: 'stream',
+        timeout: 10000,
+        withCredentials: false,
+        responseType: 'json',
+    }
+};
 
-
+function sortPopPrograms(obj) {
+    const sorted = Object.keys(obj).sort(function(a,b){return obj[b]-obj[a]});
+    console.log(sorted);
+    const sortedCap = sorted.map(str => {
+        return str.split('_').map(c => c.slice(0, 1).toUpperCase() + c.slice(1)).join(' ')
+    })
+    return sortedCap;
+};
 
 
 

@@ -27,8 +27,13 @@ function axiosOptions(urlInput) {
     }
 };
 
-function sortPopPrograms(arr) {
-    return arr
+function sortPopPrograms(obj) {
+    const sorted = Object.keys(obj).sort(function(a,b){return obj[b]-obj[a]});
+    console.log(sorted);
+    const sortedCap = sorted.map(str => {
+        return str.split('_').map(c => c.slice(0, 1).toUpperCase() + c.slice(1)).join(' ')
+    })
+    return sortedCap;
 };
 
 
@@ -47,10 +52,9 @@ axios(axiosOptions(urlexample)).then(function (response) {
         phoneNum: '800-800-8000',
         annualAveCost: results['2015'].cost.avg_net_price.overall,
         graduationRate: results['2015'].completion.completion_rate_4yr_150nt,
-        // // popularprogram: [],
+        popularprogram: sortPopPrograms(results['2015'].academics.program_percentage),
         annualInCost: results[2015].cost.tuition.in_state,
         annualOutCost: results[2015].cost.tuition.out_of_state
     };
-
-    console.log(JSON.stringify(schoolData, null, 2));
+    console.log(schoolData);
 });
