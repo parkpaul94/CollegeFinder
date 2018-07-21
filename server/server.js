@@ -70,10 +70,15 @@ app.use(routes);
 require('./config/passport/passport')(passport, db.User);
 require('./routes/auth/auth-routes')(app,passport);
 
-mongoose.connect(process.env.MONGODB_URI || config.test.databaseUrl, config.test.databaseOption).then(() => {
+console.log(process.env.MONGODB_URI || config.test.databaseUrl, config.test.databaseOption)
+
+mongoose.connect(
+  process.env.MONGODB_URI || config.test.databaseUrl,
+  config.test.databaseOption
+).then(() => {
   console.log('==> 🌎 MongoDB has been connected successfully!')
-  app.listen(PORT, function(err) {
-    if(!err) {
+  app.listen(PORT, function (err) {
+    if (!err) {
       console.log(`==> 🌎 Listening on port ${PORT}. Waiting for front end to call RESTful API of server`);
     } else {
       console.log('Database has err: ', err)

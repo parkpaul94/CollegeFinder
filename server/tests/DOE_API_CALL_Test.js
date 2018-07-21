@@ -1,10 +1,8 @@
-require('dotenv').config({ path: __dirname + '/.env' })
+require('dotenv').config({ path: '../.env' });
 
-const DOEAPIKEY2 = process.env.DOEKEY;
+const DOEAPIKEY = process.env.DOEKEY;
 
 const axios = require('axios');
-
-const DOEAPIKEY = 'TeOsoCTX5F9r0IXY1th1Ng2711AhnMflEkItgRO2';
 
 const API_BASE_URL = 'https://api.data.gov/ed/collegescorecard/v1/schools';
 
