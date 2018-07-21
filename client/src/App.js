@@ -1,5 +1,9 @@
-import React  from 'react';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Nav from "./components/Nav";
+import Home from "./Pages/Home";
 
+<<<<<<< HEAD
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Login from './pages/Login';
@@ -19,5 +23,19 @@ const App = () => (
       </Switch>
   </Router>
 )
+=======
+
+const App = () => (
+	<Router>
+		<div>
+      <Nav />
+			<Switch>
+				<Route exact path="/" component={Home} />
+				<Route exact path="/Home" component={Home} />
+			</Switch>
+		</div>
+	</Router>
+);
+>>>>>>> master
 
 export default App;
