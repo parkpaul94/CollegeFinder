@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const articleController = require("../../controllers/collegeController");
+const collegeController = require("../../controllers/collegeController");
 
+router
+    .route("/")
+	.get(collegeController.findAll)
+	.post(collegeController.create)
 
 router
     .route("/:id")
-    // .post(articleController.create)
-    // .get(articleController.findById)
-	// .delete(articleController.remove);
+    .get(collegeController.findById)
 
 module.exports = router;
-
-

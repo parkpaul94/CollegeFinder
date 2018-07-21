@@ -9,10 +9,13 @@ module.exports = function (passport, user) {
 
     //Serialize Sessions User
     passport.serializeUser((user, done) => {
-        console.log('Serialize user called.');
+        console.log('Serialize user called.  user:');
         console.log(user) // the whole raw user object!
         console.log('---------')
-        done(null, { _id: user._id });
+        done(null, { 
+            _id: user._id, 
+            email: user.email
+        });
     });
 
     //Deserialize Session User 
@@ -52,12 +55,10 @@ module.exports = function (passport, user) {
             ).then((user) => {
                 // if(err) return done(err);
                 if (user) {
-                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~', user.email);
                     return done(null, false, req.flash('signUpMessage', 'That email is already taken by others, please choose a different one'));
                     
                 } else {
                     generateHash(password).then((res => {
-                        console.log(res);
                         const userPassword = res;
                         const data = 
                             {
@@ -69,7 +70,6 @@ module.exports = function (passport, user) {
                             };
                         console.log('\n New user successfully created...', data.email);
                         console.log('\n New user password...' + userPassword + '\n');
-                        console.log(data);
                         User.create(data).then(function (newUser) {
                             console.log(newUser);
                             if (!newUser) {
