@@ -2,9 +2,9 @@ const router = require("express").Router();
 const doeRoutes = require("./doeAPI");
 const collegeRoutes = require('./college');
 
-// NYT API routes
+// DOE API routes
 router.use("/doequery", doeRoutes);
-// User routes
+// College routes
 router.use("/college", collegeRoutes);
 
 module.exports = router;

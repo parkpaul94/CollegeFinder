@@ -1,12 +1,10 @@
 import React from "react";
-import Icon from './Icon/Icon.js';
-import Logo from '../Logo/Logo.js';
-// import Modal from '../Modal/Modal.js';
+import Icon from '../Icon/Icon';
+import Logo from '../Logo/Logo';
 import "./Nav.css";
 
 const Nav = () => (
-  // Nav Component
-    <nav>
+  <nav>
     <div className="nav-wrapper nav-color">
       <Logo text ="school"/>
         <ul className="left">
@@ -21,8 +19,6 @@ const Nav = () => (
       <Icon id="modal-trigger" pageName="login" text="lock_open" />
         </ul>
     </div>
-</nav>
+  </nav>
 );
-
-
 export default Nav;
