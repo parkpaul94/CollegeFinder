@@ -6,15 +6,6 @@ import "./Nav.css";
 const Nav = () => (
   <nav>
     <div className="nav-wrapper nav-color">
-<<<<<<< HEAD
-      <Logo text="school" />
-      <ul className="right">
-        <Icon pageName="list" text="list" />
-        <Icon pageName="search" text="search" />
-        <Icon pageName="profile" text="account_box" />
-        <Icon id="modal-trigger" pageName="login" text="lock_open" />
-      </ul>
-=======
       <Logo text ="school"/>
         <ul className="left">
       <Icon pageName="colleges" text="school" />
@@ -24,16 +15,12 @@ const Nav = () => (
       <Icon pageName="list" text="list" />
       <Icon pageName="search" text="search" />
       <Icon pageName="profile" text="account_box" />
-      
+
       <Icon id="modal-trigger" pageName="login" text="lock_open" />
         </ul>
->>>>>>> davi
+
     </div>
   </nav>
 );
-
-<<<<<<< HEAD
-=======
-
->>>>>>> davi
+>>>>>>> dc5867206a386c16586bf88905c9ffc1a006e21c
 export default Nav;
