@@ -4,8 +4,13 @@ require('dotenv').config({ path: '../.env' });
 const mongoose = require("mongoose");
 const db = require("../models");
 const config = require('../config/mongoDb/mongoConfig.js');
-
 const idArr = require('./idDB');
+const DOEAPIKEY = process.env.DOEKEY;
+
+const axios = require('axios');
+
+const API_BASE_URL = 'https://api.data.gov/ed/collegescorecard/v1/schools';
+
 mongoose.Promise = global.Promise;
 
 mongoose.connect(
@@ -13,46 +18,76 @@ mongoose.connect(
 	config.test.databaseOption
 );
 
+process.on('unhandledRejection', function(reason, promise) {
+	console.log(promise);
+  });
+
 function axiosOptions(urlInput) {
-    return {
-        method: 'get',
-        url: urlInput,
-        responseType: 'stream',
-        timeout: 10000,
-        withCredentials: false,
-        responseType: 'json',
-    }
+	return {
+		method: 'get',
+		url: urlInput,
+		responseType: 'stream',
+		timeout: 10000,
+		withCredentials: false,
+		responseType: 'json',
+	}
 };
 
 function sortPopPrograms(obj) {
-    const sorted = Object.keys(obj).sort(function(a,b){return obj[b]-obj[a]});
-    console.log(sorted);
-    const sortedCap = sorted.map(str => {
-        return str.split('_').map(c => c.slice(0, 1).toUpperCase() + c.slice(1)).join(' ')
-    })
-    return sortedCap;
+	const sorted = Object.keys(obj).sort(function (a, b) { return obj[b] - obj[a] });
+	const sortedCap = sorted.map(str => {
+		return str.split('_').map(c => c.slice(0, 1).toUpperCase() + c.slice(1)).join(' ')
+	})
+	return sortedCap;
 };
 
+getDOEData = async (schoolDOEId) => {
+	const response = await axios(
+		axiosOptions(`${API_BASE_URL}?api_key=${DOEAPIKEY}&id=${schoolDOEId}`)
+	);
+	const results = response.data.results[0];
+	const schoolData = {
+		doeId: results.id,
+		location: {
+			lon: results.location.lon,
+			lat: results.location.lat
+		},
+		collegeName: results.school.name,
+		city: results.school.city,
+		state: results.school.state,
+		weblink: results.school.school_url,
+		phoneNum: '800-800-8000',
+		annualAveCost: results['2015'].cost.avg_net_price.overall,
+		graduationRate: results['2015'].completion.completion_rate_4yr_150nt,
+		popularprogram: sortPopPrograms(results['2015'].academics.program_percentage),
+		annualInCost: results[2015].cost.tuition.in_state,
+		annualOutCost: results[2015].cost.tuition.out_of_state
+	};
+	console.log(schoolData);
 
+	db.College
+			.create(schoolData)
+			.then(data => {
+				console.log('Successfully wrote to the Database');
+				process.exit(0);
+			})
+			.catch(err => {
+				console.error(err);
+				process.exit(1);
+			});
+	// return schoolData;
+}
 
-// const bookSeed = [
-// 	{
-// 		title: "The Dead Zone",
-// 		author: "Stephen King",
-// 		synopsis:
-// 			"A number-one national best seller about a man who wakes up from a five-year coma able to see people's futures and the terrible fate awaiting mankind in The Dead Zone - a \"compulsive page-turner\" (The Atlanta Journal-Constitution). Johnny Smith awakens from a five-year coma after his car accident and discovers that he can see people's futures and pasts when he touches them. Many consider his talent a gift; Johnny feels cursed. His fiancée married another man during his coma, and people clamor for him to solve their problems. When Johnny has a disturbing vision after he shakes the hand of an ambitious and amoral politician, he must decide if he should take drastic action to change the future. The Dead Zone is a \"faultlessly paced...continuously engrossing\" (Los Angeles Times) novel of second sight.",
-// 		date: new Date(Date.now())
-// 	},
-// ];
+// getDOEData(120184);
 
-// db.Book
-// 	.remove({})
-// 	.then(() => db.Book.collection.insertMany(bookSeed))
-// 	.then(data => {
-// 		console.log(data.insertedIds.length + " records inserted!");
-// 		process.exit(0);
-// 	})
-// 	.catch(err => {
-// 		console.error(err);
-// 		process.exit(1);
-// 	});
+db.College.remove();
+
+idArr.forEach((eachId, index) => {
+	console.log(eachId);
+	if (index < 3) {
+		console.log(`${index} \n`);
+		let eachIdData = getDOEData(eachId);
+		console.log(eachIdData);
+	} else {
+	}
+})

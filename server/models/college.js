@@ -22,7 +22,6 @@ const CollegeSchema = new Schema({
     collegeName: {
         type: String,
         trim: true,
-        required: "College Name is Required"
     },
 
     city: {

@@ -16,6 +16,11 @@ const urlexample = `${API_BASE_URL}?api_key=${DOEAPIKEY}${option2}`;
 
 console.log(`Here is the DOE API call link \n ${urlexample}`);
 
+
+process.on('unhandledRejection', function(reason, promise) {
+	console.log(promise);
+  });
+
 function axiosOptions(urlInput) {
     return {
         method: 'get',
@@ -29,7 +34,6 @@ function axiosOptions(urlInput) {
 
 function sortPopPrograms(obj) {
     const sorted = Object.keys(obj).sort(function(a,b){return obj[b]-obj[a]});
-    console.log(sorted);
     const sortedCap = sorted.map(str => {
         return str.split('_').map(c => c.slice(0, 1).toUpperCase() + c.slice(1)).join(' ')
     })
