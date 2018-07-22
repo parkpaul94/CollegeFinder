@@ -1,65 +1,59 @@
 import React from "react";
+import { Col, Row, Container } from "../../components/Grid";
+
 import "./Signup_Form.css";
 
 const Signup_Form = () => (
-<div class="container">
-    <div class="signup_container">
-    <h3>Sign Up</h3>
-        <form id="signup" name="signup" method="post" action="/signup">
-            <div class="row">
-                <div class="col s12">
-                    <div class="row">
-                        <p class="flat-text small"></p>
-                            <div class="input-field col s6">
-                                <div class="row">
-                                    <i class="material-icons prefix">person</i>
-                                    <label for="firstname">First Name</label>
-                                    <input type="text" class="form-control" name="firstname" />
+    <Container>
+        <div className="signup_container">
+            <h3>Sign Up</h3>
+            <form id="signup" name="signup" method="post" action="/signup">
+                <div className="row">
+                    <div className="col s12">
+                        <div className="row">
+                            <p className="flat-text small"></p>
+                            <div className="input-field col s6">
+                                <Row>
+                                    <i className="material-icons prefix">person</i>
+                                    <label htmlFor="firstname">First Name</label>
+                                    <input type="text" className="form-control" name="firstname" />
+                                </Row>
+                            </div>
+                            <div className="input-field col s6">
+                                <div className="row">
+                                    <i className="material-icons prefix">person</i>
+                                    <label htmlFor="lastname">Last Name</label>
+                                    <input type="text" className="form-control" name="lastname" />
                                 </div>
                             </div>
-                                    {/* <div class="input-field col s6">
-                                        <label for="firstname">First Name</label>
-                                        <input type="text" class="form-control" name = "firstname" />
-                                    </div> */}
-                                    {/* <div class="input-field col s6">
-                                        <label for="lastname">Last name</label>
-                                        <input type="text" class="form-control" name = "lastname" />
-                                    </div> */}
-                            <div class="input-field col s6">
-                                <div class="row">
-                                    <i class="material-icons prefix">person</i>
-                                    <label for="lastname">Last Name</label>
-                                    <input type="text" class="form-control" name="lastname" />
-                                </div>
-                            </div>
-                    </div>
+                        </div>
 
-                <div class="row">
-                <div class="input-field col s12">
-                    <div class="row">
-                        <i class="material-icons prefix">mail_outline</i>
-                        <label for="email">Email Address</label>
-                        <input type="email" class="form-control" name="email" aria-describedby="emailHelp" />
+                        <div className="row">
+                            <div className="input-field col s12">
+                                <Row>
+                                    <i className="material-icons prefix">mail_outline</i>
+                                    <label htmlFor="email">Email Address</label>
+                                    <input type="email" className="form-control" name="email" aria-describedby="emailHelp" />
+                                </Row>
+                            </div>
+                            <div className="input-field col s12">
+                                <Row>
+                                    <i className="material-icons prefix">lock_outline</i>
+                                    <label htmlFor="password">Password</label>
+                                    <input type="password" className="form-control" name="password" />
+                                </Row>
+                            </div>
+                        </div>
+                        <Row>
+                            <button id="reg_submit" className="btn waves-effect waves-light grey darken-4 btn-signup" type="submit" name="action">Submit
+                            <i className="material-icons right">send</i>
+                            </button>
+                        </Row>
                     </div>
                 </div>
-                    <div class="input-field col s12">
-                    <div class="row">
-                        <i class="material-icons prefix">lock_outline</i>
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" />
-                    </div>
-                    </div>
-                    </div>
-                    <div class="row">
-                        <button id ="reg_submit" class="btn waves-effect waves-light grey darken-4 btn-signup" type="submit" name="action">Submit
-                            <i class="material-icons right">send</i>
-                        </button>
-                    </div>
-                    </div>
-            </div>
-        </form>
-    </div>
-</div>
+            </form>
+        </div>
+    </Container>
 );
 
 

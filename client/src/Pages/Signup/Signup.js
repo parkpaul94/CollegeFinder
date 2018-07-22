@@ -5,7 +5,7 @@ import Nav from "../../components/Nav";
 class Signup extends Component {
 	render() {
 		return (
-				<Signup_Form />
+			<Signup_Form />
 		);
 	}
 }
