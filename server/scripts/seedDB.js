@@ -64,9 +64,55 @@ getDOEData = async (schoolDOEId) => {
 		annualOutCost: results[2015].cost.tuition.out_of_state
 	};
 	console.log(schoolData);
+	return schoolData;
+}
 
-	db.College
-			.create(schoolData)
+getDOEDataV2 =  (schoolDOEId) => {
+
+	return new Promise((resolve, reject) => {
+		axios(
+			axiosOptions(`${API_BASE_URL}?api_key=${DOEAPIKEY}&id=${schoolDOEId}`)
+		).then(response => {
+			const results = response.data.results[0];
+			const schoolData = {
+				doeId: results.id,
+				location: {
+					lon: results.location.lon,
+					lat: results.location.lat
+				},
+				collegeName: results.school.name,
+				city: results.school.city,
+				state: results.school.state,
+				weblink: results.school.school_url,
+				phoneNum: '800-800-8000',
+				annualAveCost: results['2015'].cost.avg_net_price.overall,
+				graduationRate: results['2015'].completion.completion_rate_4yr_150nt,
+				popularprogram: sortPopPrograms(results['2015'].academics.program_percentage),
+				annualInCost: results[2015].cost.tuition.in_state,
+				annualOutCost: results[2015].cost.tuition.out_of_state
+			};
+			console.log(schoolData);
+			resolve(schoolData);
+		}).catch(err => {
+			reject(err);
+		})
+	})
+};
+db.College.remove({});
+// getDOEData(120184);
+
+const newArr = [];
+
+idArr.forEach((eachId, index) => {
+		getDOEDataV2(eachId).then((data) => {
+			newArr[index] = data;
+		});
+})
+
+function writetoDB() {
+	console.log(newArr);
+		db.College
+			.insertMany(newArr)
 			.then(data => {
 				console.log('Successfully wrote to the Database');
 				process.exit(0);
@@ -75,19 +121,6 @@ getDOEData = async (schoolDOEId) => {
 				console.error(err);
 				process.exit(1);
 			});
-	// return schoolData;
-}
+};
 
-// getDOEData(120184);
-
-db.College.remove();
-
-idArr.forEach((eachId, index) => {
-	console.log(eachId);
-	if (index < 3) {
-		console.log(`${index} \n`);
-		let eachIdData = getDOEData(eachId);
-		console.log(eachIdData);
-	} else {
-	}
-})
+setTimeout(writetoDB, 30000);
