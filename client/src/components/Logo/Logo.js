@@ -1,7 +1,7 @@
 import React from "react";
 
 const Logo = (props) => (
-    <a href="/Home" className="brand-logo center"> {props.logoname}
+    <a href="/" className="brand-logo center">Education4Me
     <i className="material-icons">{props.text}</i></a>
 );
 
