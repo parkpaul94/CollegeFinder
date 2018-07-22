@@ -7,9 +7,7 @@ import Nav from "../../components/Nav";
 class Login extends Component {
 	render() {
 		return (
-			<Nav>
-				<Login_Form />
-			</Nav>
+			<Login_Form />
 		);
 	}
 };

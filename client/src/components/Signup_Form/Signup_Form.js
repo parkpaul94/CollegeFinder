@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, Link } from 'react-router-dom'
 import { Col, Row, Container } from "../../components/Grid";
 
 import "./Signup_Form.css";
@@ -8,10 +9,9 @@ const Signup_Form = () => (
         <div className="signup_container">
             <h3>Sign Up</h3>
             <form id="signup" name="signup" method="post" action="/signup">
-                <div className="row">
+                <Row>
                     <div className="col s12">
-                        <div className="row">
-                            <p className="flat-text small"></p>
+                        <Row>
                             <div className="input-field col s6">
                                 <Row>
                                     <i className="material-icons prefix">person</i>
@@ -20,15 +20,15 @@ const Signup_Form = () => (
                                 </Row>
                             </div>
                             <div className="input-field col s6">
-                                <div className="row">
+                                <Row>
                                     <i className="material-icons prefix">person</i>
                                     <label htmlFor="lastname">Last Name</label>
                                     <input type="text" className="form-control" name="lastname" />
-                                </div>
+                                </Row>
                             </div>
-                        </div>
+                        </Row>
 
-                        <div className="row">
+                        <Row>
                             <div className="input-field col s12">
                                 <Row>
                                     <i className="material-icons prefix">mail_outline</i>
@@ -43,14 +43,14 @@ const Signup_Form = () => (
                                     <input type="password" className="form-control" name="password" />
                                 </Row>
                             </div>
-                        </div>
+                        </Row>
                         <Row>
                             <button id="reg_submit" className="btn waves-effect waves-light grey darken-4 btn-signup" type="submit" name="action">Submit
                             <i className="material-icons right">send</i>
                             </button>
                         </Row>
                     </div>
-                </div>
+                </Row>
             </form>
         </div>
     </Container>
