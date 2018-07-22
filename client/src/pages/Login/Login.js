@@ -1,21 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Route, Link } from 'react-router-dom'
+
+import Login_Form from "../../components/Login_Form/Login_Form";
 import Nav from "../../components/Nav";
 
 class Login extends Component {
-	state = {
-		loggedIn: false,
-		user: null
-	};
-
 	render() {
 		return (
-			<div className="App">
-				<h1>This is the main App component</h1>
-			</div>
-		)
+			<Nav>
+				<Login_Form />
+			</Nav>
+		);
 	}
-}
+};
 
-export default Login
+export default Login;
