@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 // import Jumbotron from "../../components/Jumbotron";
 // import API from "../../utils/API";
@@ -27,7 +27,7 @@ class Home extends Component {
 				</Row>
 				<Row>
 					<Col size="md-2">
-						{/* <Link to="/">← Back to Authors</Link> */}
+						<Link to="/">← Back to Authors</Link>
 					</Col>
 				</Row>
 			</Container>
