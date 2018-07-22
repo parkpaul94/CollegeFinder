@@ -18,9 +18,7 @@ const Nav = () => (
 
       <Icon id="modal-trigger" pageName="login" text="lock_open" />
         </ul>
-
     </div>
   </nav>
 );
->>>>>>> dc5867206a386c16586bf88905c9ffc1a006e21c
 export default Nav;
