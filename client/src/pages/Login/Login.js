@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Route, Link } from 'react-router-dom'
-import '../../App.css'
 
 class Login extends Component {
-
-		state = {
-			loggedIn: false,
-			user: null
-		};
+	state = {
+		loggedIn: false,
+		user: null
+	};
 
 	render() {
 		return (
