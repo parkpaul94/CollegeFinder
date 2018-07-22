@@ -1,4 +1,5 @@
 import React from "react";
+import './Icon.css'
 
 const Icon = (props) => (
     <li><a id={props.id} href={"/" + props.pageName}>

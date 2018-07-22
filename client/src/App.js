@@ -4,7 +4,6 @@ import Home from "./pages/Home";
 import Login from './pages/Login';
 import NoMatch from './pages/NoMatch';
 
-
 const App = () => (
 	<Router>
 		<Switch>
