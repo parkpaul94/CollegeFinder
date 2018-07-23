@@ -70,8 +70,6 @@ app.use(routes);
 require('./config/passport/passport')(passport, db.User);
 require('./routes/auth/auth-routes')(app,passport);
 
-console.log(process.env.MONGODB_URI || config.test.databaseUrl, config.test.databaseOption)
-
 mongoose.connect(
   process.env.MONGODB_URI || config.test.databaseUrl,
   config.test.databaseOption

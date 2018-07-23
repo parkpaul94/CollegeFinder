@@ -42,7 +42,7 @@ class Signup extends Component {
 
 		event.preventDefault();
 
-		if(!this.state.firstname && !this.state.lastname && !this.state.email && !this.state.password) {
+		if(this.state.firstname && this.state.lastname && this.state.email && this.state.password) {
 			axios
 			.post('/auth/signup', {
 				password: this.state.password,
@@ -133,7 +133,7 @@ class Signup extends Component {
 								</Row>
 								<Row>
 									<button id="reg_submit" className="btn waves-effect waves-light grey darken-4 btn-signup"
-										onClick={() => this.handleSaveSubmit()} type="submit" name="action">Submit
+										onClick={(e) => this.handleFormSubmit(e)} type="submit" name="action">Submit
                             			    <i className="material-icons right">send</i>
 									</button>
 								</Row>

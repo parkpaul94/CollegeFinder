@@ -1,9 +1,7 @@
 
 const authController = require('../../controllers/authcontroller.js');
 const path = require('path');
-const isLoggedIn = require('../../middlewares/auth.js')
-
-console.log('loaded')
+const isLoggedIn = require('../../middlewares/auth.js');
 
 module.exports = function (app, passport) {
 
@@ -19,12 +17,14 @@ module.exports = function (app, passport) {
 
     app.get('/auth/signup', authController.signup);
 
-    app.post('/auth/signup', passport.authenticate('local-signup'), (req, res) => {
-        console.log('User Signed Up', req.user);
-        res.json({
-            username: req.user.email
-        });
-    });
+    app.post('/auth/signup', authController.signup);
+
+    // app.post('/auth/signup', passport.authenticate('local-signup'), (req, res) => {
+    //     console.log('User Signed Up', req.user);
+    //     res.json({
+    //         username: req.user.email
+    //     });
+    // });
 
     app.get('/auth/signin', authController.signin);
 
