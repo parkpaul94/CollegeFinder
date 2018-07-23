@@ -18,13 +18,30 @@ class Signup extends Component {
 		redirectTo: null
 	};
 
-	handleInputChange(event) {
-		this.setState({
-			[event.target.name]: event.target.value
-		})
+	componentDidMount() {
+		this.loadDefault();
 	};
 
-	handleSubmit(event) {
+	loadDefault = () => {
+
+		this.setState({
+			email: '',
+			firstname: '',
+			lastname: '',
+			password: '',
+			confirmPassword: '',
+			redirectTo: null
+		});
+	};
+
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+          [name]: value
+        });
+    };
+
+	handleFormSubmit(event) {
 		event.preventDefault();
 		axios
 			.post('/auth/signup', {
@@ -110,8 +127,9 @@ class Signup extends Component {
 									/>
 								</Row>
 								<Row>
-									<button id="reg_submit" className="btn waves-effect waves-light grey darken-4 btn-signup" type="submit" name="action">Submit
-                            			<i className="material-icons right">send</i>
+									<button id="reg_submit" className="btn waves-effect waves-light grey darken-4 btn-signup"
+										onClick={() => this.handleSaveSubmit()} type="submit" name="action">Submit
+                            			    <i className="material-icons right">send</i>
 									</button>
 								</Row>
 							</div>

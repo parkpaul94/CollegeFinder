@@ -8,7 +8,7 @@ const FormGroup = (props) => (
         <Row>
             <i className={props.iClass}>{props.iValue}</i>
             <label htmlFor={props.name}>{props.lableName}}</label>
-            <input type="text" className="form-control" name={props.name} aria-describedby={props.aria} />
+            <input type="text" className="form-control" name={props.name} aria-describedby={props.aria} onChange={props.onChange}/>
         </Row>
     </div>
 );
