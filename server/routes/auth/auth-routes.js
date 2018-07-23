@@ -1,9 +1,9 @@
 
-
-
 const authController = require('../../controllers/authcontroller.js');
 const path = require('path');
 const isLoggedIn = require('../../middlewares/auth.js')
+
+console.log('loaded')
 
 module.exports = function (app, passport) {
 
@@ -29,8 +29,6 @@ module.exports = function (app, passport) {
     app.get('/auth/signin', authController.signin);
 
     app.post('/auth/signin', passport.authenticate('local-signin', {
-        // successRedirect: '/dashboard',
-        // failureRedirect: '/signin',
         failureFlash: true
     }),(req, res) => {
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');

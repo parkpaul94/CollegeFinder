@@ -14,7 +14,6 @@ class Signup extends Component {
 		firstname: '',
 		lastname: '',
 		password: '',
-		confirmPassword: '',
 		redirectTo: null
 	};
 
@@ -23,14 +22,12 @@ class Signup extends Component {
 	};
 
 	loadDefault = () => {
-
 		this.setState({
 			email: '',
 			firstname: '',
 			lastname: '',
 			password: '',
-			confirmPassword: '',
-			redirectTo: null
+  			redirectTo: null
 		});
 	};
 
@@ -42,8 +39,11 @@ class Signup extends Component {
     };
 
 	handleFormSubmit(event) {
+
 		event.preventDefault();
-		axios
+
+		if(!this.state.firstname && !this.state.lastname && !this.state.email && !this.state.password) {
+			axios
 			.post('/auth/signup', {
 				password: this.state.password,
 				email: this.state.email,
@@ -61,6 +61,11 @@ class Signup extends Component {
 					console.log('Auth API return error')
 				}
 			})
+		} else {
+			console.log(this.state.firstname && this.state.lastname && this.state.email && this.state.password)
+			return;
+		}
+
 	};
 
 	render() {
