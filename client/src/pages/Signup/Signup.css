@@ -1,0 +1,22 @@
+.signup_container {
+    width: 100%;
+    margin-top: 5%;
+    background-color: #FFFFED;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.input-field .prefix.active {
+    color: #1A243C;
+  }
+
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]) {
+    border-bottom:1px solid #1A243C;
+    box-shadow:0 1px 0 0 #1A243C
+}
+
+label {
+    font-size: 1em;
+}
