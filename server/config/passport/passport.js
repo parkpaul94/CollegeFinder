@@ -23,7 +23,7 @@ module.exports = function (passport, user) {
         console.log('Deserialize user called.');
         User.findOne(
             { _id: id },
-            'username',
+            // 'username',
             (err, user) => {
                 console.log('*** Deserialize user, user:')
                 console.log(user)
@@ -71,7 +71,7 @@ module.exports = function (passport, user) {
                         console.log('\n New user successfully created...', data.email);
                         console.log('\n New user password...' + userPassword + '\n');
                         User.create(data).then(function (newUser) {
-                            console.log(newUser);
+                            console.log('~~~~~~~~~~~~',newUser);
                             if (!newUser) {
                                 return done(null, false);
                             }
@@ -100,26 +100,27 @@ module.exports = function (passport, user) {
         function (req, email, password, done) {
 
             const User = user;
+            console.log('/n', email, password, '/n');
             const isValidPassword = function (userpass, password) {
                 return bCrypt.compareSync(password, userpass);
             };
 
-            // console.log('local strategy called with: %s', typeof(email), ' : ', email, typeof(password), ' : ',password);
+            console.log('local strategy called with: %s', typeof(email), ' : ', email, typeof(password), ' : ',password);
 
             User.findOne(
                 { 'email': email }
             ).then(function (user) {
-                if (!user) {
+                if (user._id === null ) {
                     return done(null, false, req.flash('signInMessage', 'Email does not exist!'));
                 };
-                if (!isValidPassword(user.pass, password)) {
+                if (!isValidPassword(user.password, password)) {
                     return done(null, false, req.flash('signInMessage', 'Incorrect password!'));
                 };
                 // const userinfo = user.get(); 
                 // return done(null, userinfo);
                 return done(null, user);
             }).catch((err) => {
-                console.log('Signin Sequelize Error: ', err);
+                console.log('Signin MongoDB Error: ', err);
                 return done(null, false, req.flash('signInMessage', 'Something went wrong with your signin!'));
             });
         }
