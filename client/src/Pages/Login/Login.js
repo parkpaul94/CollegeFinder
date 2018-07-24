@@ -71,6 +71,8 @@ class Login extends Component {
 				<div className="login_container">
 					<h3>Log In</h3><hr />
 					<form id="signin" name="signin" method="post" action="/auth/login">
+				<Row>
+					<Col size="md-12">
 						<Row>
 							<FromGroup
 								divClass='input-field col s12'
@@ -84,6 +86,8 @@ class Login extends Component {
 								value={this.state.email}
 								onChange={this.handleInputChange}
 							/>
+						</Row>
+						<Row>
 							<FromGroup
 								divClass='input-field col s12'
 								iClass="material-icons prefix"
@@ -96,13 +100,16 @@ class Login extends Component {
 								value={this.state.password}
 								onChange={this.handleInputChange}
 							/>
+						</Row>
+						
+						<Row>
 							<button type="submit" 
 							        className="btn btn-login btn-primary waves-effect waves-light col s12" 
 									onClick={(e) => this.handleFormSubmit(e)} >Login
 							</button>
-
 						</Row>
-
+					</Col>
+				</Row>
 					</form>
 				</div>
 			</Container>
