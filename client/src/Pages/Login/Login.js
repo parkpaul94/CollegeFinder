@@ -48,7 +48,7 @@ class Login extends Component {
 					if (!response.data.errmsg) {
 						console.log('Auth API return good')
 						this.setState({
-							redirectTo: '/login'
+							redirectTo: '/Home'
 						})
 					} else {
 						console.log('Auth API return error')
@@ -62,8 +62,11 @@ class Login extends Component {
 	};
 
 	render() {
+		if (this.state.redirectTo) {
+			return <Redirect to={{ pathname: this.state.redirectTo }} />
+		}
+		
 		return (
-
 			<Container>
 				<div className="login_container">
 					<h3>Log In</h3><hr />
