@@ -24,7 +24,21 @@ class Search extends Component {
 		let colleges=null;
 		if(this.state.showColleges){
 			colleges=(
-				<Row><College/><College/><College/></Row>
+				<Row>
+					<Col size="md-4">
+					<College/>
+					</Col>
+
+					<Col size="md-4">
+					<College/>
+					</Col>
+
+					<Col size="md-4">
+					<College/>
+					</Col>
+					
+					
+				</Row>
 			);
 		}
 
