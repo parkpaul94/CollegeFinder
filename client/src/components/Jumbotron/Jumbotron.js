@@ -3,7 +3,7 @@ import './Jumbotron.css'
 
 const Jumbotron = ({ children }) => (
   <div className="jumbotron">
-    <h1 className="text-center"><strong><i className="fa fa-newspaper-o"></i>  {children}</strong></h1>
+    <h1 className="text-center"><strong>{children}</strong></h1>
   </div>
 );
 
