@@ -23,7 +23,7 @@ module.exports = function (passport, user) {
         console.log('Deserialize user called.');
         User.findOne(
             { _id: id },
-            'username',
+            // 'username',
             (err, user) => {
                 console.log('*** Deserialize user, user:')
                 console.log(user)
@@ -71,7 +71,7 @@ module.exports = function (passport, user) {
                         console.log('\n New user successfully created...', data.email);
                         console.log('\n New user password...' + userPassword + '\n');
                         User.create(data).then(function (newUser) {
-                            console.log(newUser);
+                            console.log('~~~~~~~~~~~~',newUser);
                             if (!newUser) {
                                 return done(null, false);
                             }

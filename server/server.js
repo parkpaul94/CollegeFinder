@@ -68,7 +68,7 @@ app.use(routes);
 // require("./routes/api-routes-user&food")(app);
 // require("./routes/api-routes-meal")(app);
 require('./config/passport/passport')(passport, db.User);
-require('./routes/auth/auth-routes')(app,passport);
+require('./routes/auth/auth-routes')(app, passport);
 
 mongoose.connect(
   process.env.MONGODB_URI || config.test.databaseUrl,

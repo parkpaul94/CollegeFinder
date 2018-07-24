@@ -51,7 +51,7 @@ class Signup extends Component {
 				lastname: this.state.lastname,
 			})
 			.then(response => {
-				console.log(response)
+				console.log(response.data);
 				if (!response.data.errmsg) {
 					console.log('Auth API return good')
 					this.setState({

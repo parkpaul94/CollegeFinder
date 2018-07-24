@@ -17,21 +17,19 @@ module.exports = function (app, passport) {
 
     app.get('/auth/signup', authController.signup);
 
-    app.post('/auth/signup', authController.signup);
-
-    // app.post('/auth/signup', passport.authenticate('local-signup'), (req, res) => {
-    //     console.log('User Signed Up', req.user);
-    //     res.json({
-    //         username: req.user.email
-    //     });
-    // });
+    app.post('/auth/signup', passport.authenticate('local-signup'), (req, res) => {
+        console.log('User Signed Up Successfully', req.user);
+        res.json({
+            username: req.user.email,
+            id: req.user._id
+        });
+    });
 
     app.get('/auth/signin', authController.signin);
 
     app.post('/auth/signin', passport.authenticate('local-signin', {
         failureFlash: true
     }),(req, res) => {
-        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
         res.json({
             message: req.flash('signInMessage'),
         });

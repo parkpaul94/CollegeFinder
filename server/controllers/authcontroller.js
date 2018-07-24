@@ -1,14 +1,14 @@
 var exports = module.exports = {};
  
 exports.signup = function(req, res) {
-    res.json({
-        message: 'signup API called'
+    res.send({
+        message: 'signup API called!!!'
     });
 };
 
 exports.signin = function(req, res) {
-    res.json({
-        message: 'signin API called'
+    res.send({
+        message: 'signin API called!!!'
     });
 };
 

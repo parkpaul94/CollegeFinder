@@ -5,12 +5,4 @@ const apiRoutes = require("./api");
 // API Routes
 router.use("/api", apiRoutes);
 
-// If no API routes are hit, send the default index app
-router.use(function (req, res) {
-    // res.sendFile(path.join(__dirname, "../client/public/index.html"));
-    res.json({
-        message: 'API call failed'
-    })
-});
-
 module.exports = router;

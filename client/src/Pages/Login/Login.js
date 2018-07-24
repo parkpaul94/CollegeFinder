@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom'
 import FromGroup from "../../components/Signup_Form/FromGroup";
-import Login_Form from "../../components/Login_Form/Login_Form";
-import Nav from "../../components/Nav";
+import { Col, Row, Container } from "../../components/Grid";
+
+import './Login.css'
 
 class Login extends Component {
 
@@ -21,40 +23,40 @@ class Login extends Component {
 		this.setState({
 			email: '',
 			password: '',
-  			redirectTo: null
+			redirectTo: null
 		});
 	};
 
 	handleInputChange = event => {
-        const { name, value } = event.target;
-        this.setState({
-          [name]: value
-        });
+		const { name, value } = event.target;
+		this.setState({
+			[name]: value
+		});
 	};
-	
+
 	handleFormSubmit(event) {
 
 		event.preventDefault();
 
-		if(!this.state.email && !this.state.password) {
+		if (!this.state.email && !this.state.password) {
 			axios
-			.post('/auth/signin', {
-				password: this.state.password,
-				email: this.state.email,
-			})
-			.then(response => {
-				console.log(response)
-				if (!response.data.errmsg) {
-					console.log('Auth API return good')
-					this.setState({
-						redirectTo: '/login'
-					})
-				} else {
-					console.log('Auth API return error')
-				}
-			})
+				.post('/auth/signin', {
+					password: this.state.password,
+					email: this.state.email,
+				})
+				.then(response => {
+					console.log(response)
+					if (!response.data.errmsg) {
+						console.log('Auth API return good')
+						this.setState({
+							redirectTo: '/login'
+						})
+					} else {
+						console.log('Auth API return error')
+					}
+				})
 		} else {
-			console.log( this.state.email && this.state.password)
+			console.log(this.state.email && this.state.password)
 			return;
 		}
 
@@ -62,7 +64,47 @@ class Login extends Component {
 
 	render() {
 		return (
-			<Login_Form />
+
+			<Container>
+				<div className="login_container">
+					<h3>Log In</h3><hr />
+					<form id="signin" name="signin" method="post" action="/auth/login">
+						<Row>
+							<FromGroup
+								divClass='input-field col s12'
+								iClass="material-icons prefix"
+								iValue='mail_outline'
+								name='email'
+								lableName='Email Address'
+								id='email'
+								key='email'
+								aria='emailHelp'
+								value={this.state.email}
+								onChange={this.handleInputChange}
+							/>
+							<FromGroup
+								divClass='input-field col s12'
+								iClass="material-icons prefix"
+								iValue='lock_outline'
+								name='password'
+								lableName='Password'
+								id='password'
+								key='password'
+								aria=''
+								value={this.state.password}
+								onChange={this.handleInputChange}
+							/>
+							<button type="submit" 
+							        className="btn btn-login btn-primary waves-effect waves-light col s12" 
+									onClick={(e) => this.handleFormSubmit(e)} >Login
+							</button>
+
+						</Row>
+
+					</form>
+				</div>
+			</Container>
+
 		);
 	}
 };
