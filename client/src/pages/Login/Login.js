@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom';
-import { Route, Link } from 'react-router-dom'
 import FromGroup from "../../components/Signup_Form/FromGroup";
 import { Col, Row, Container } from "../../components/Grid";
 
