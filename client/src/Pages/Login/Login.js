@@ -35,10 +35,9 @@ class Login extends Component {
 	};
 
 	handleFormSubmit(event) {
-
 		event.preventDefault();
-
-		if (!this.state.email && !this.state.password) {
+		console.log('Click')
+		if (this.state.email && this.state.password) {
 			axios
 				.post('/auth/signin', {
 					password: this.state.password,
@@ -56,7 +55,7 @@ class Login extends Component {
 					}
 				})
 		} else {
-			console.log(this.state.email && this.state.password)
+			console.log('Somnething went wrong!')
 			return;
 		}
 
