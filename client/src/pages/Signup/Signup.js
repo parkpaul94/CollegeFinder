@@ -38,6 +38,7 @@ class Signup extends Component {
 	handleFormSubmit(event) {
 
 		event.preventDefault();
+		console.log('THis is clicked')
 
 		if(this.state.firstname && this.state.lastname && this.state.email && this.state.password) {
 			axios

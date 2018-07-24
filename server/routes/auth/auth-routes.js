@@ -49,7 +49,7 @@ module.exports = function (app, passport) {
             successRedirect: '/',
             failureRedirect: '/login'
         })
-    )
+    );
 
 };
 

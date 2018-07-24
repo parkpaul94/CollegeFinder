@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom';
 import FromGroup from "../../components/Signup_Form/FromGroup";
-import { Row, Container } from "../../components/Grid";
+import { Col, Row, Container } from "../../components/Grid";
 
 import './Login.css'
 
