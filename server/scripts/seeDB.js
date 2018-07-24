@@ -97,8 +97,22 @@ getDOEDataV2 = (schoolDOEId) => {
 		})
 	})
 };
+
 db.College.remove({});
 
+function writetoDB() {
+	console.log(newArr);
+	db.College
+		.insertMany(newArr)
+		.then(data => {
+			console.log('Successfully wrote to the Database');
+			process.exit(0);
+		})
+		.catch(err => {
+			console.error(err);
+			process.exit(1);
+		});
+};
 
 function updateDb(index) {
 	console.log(`Current index is: ${index}`)
@@ -130,30 +144,11 @@ function updateDb(index) {
 				console.log(`Getting NULL results for id: ${idArr[index]}, skipping saving to database!`);
 			}
 			 updateDb(index + 1);
-		//	setTimeout(updateDb.bind(this, index+1), 3000)
 		}).catch(err => {
 			console.log(`Getting error for index ${index}, sending again!`)
-		//	setTimeout(updateDb.bind(this, index+1), 10000)			
 			 updateDb(index + 1);
 		});
 	}
 }
 
 updateDb(0);
-
-
-function writetoDB() {
-	console.log(newArr);
-	db.College
-		.insertMany(newArr)
-		.then(data => {
-			console.log('Successfully wrote to the Database');
-			process.exit(0);
-		})
-		.catch(err => {
-			console.error(err);
-			process.exit(1);
-		});
-};
-
-//setTimeout(writetoDB, 30000);
