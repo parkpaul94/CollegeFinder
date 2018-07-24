@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from 'react-router-dom';
-import { Route, Link } from 'react-router-dom'
 import axios from 'axios';
 import FromGroup from "../../components/Signup_Form/FromGroup";
-import { Col, Row, Container } from "../../components/Grid";
-
-
+import { Row, Container } from "../../components/Grid";
 
 class Signup extends Component {
 

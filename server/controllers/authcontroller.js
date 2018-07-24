@@ -2,13 +2,13 @@ var exports = module.exports = {};
  
 exports.signup = function(req, res) {
     res.send({
-        message: 'signup API called!!!'
+        message: 'signup API GET called'
     });
 };
 
 exports.signin = function(req, res) {
     res.send({
-        message: 'signin API called!!!'
+        message: 'signin API GET called'
     });
 };
 

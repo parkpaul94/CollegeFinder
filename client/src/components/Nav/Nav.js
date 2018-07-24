@@ -3,7 +3,7 @@ import Icon from '../Icon/Icon';
 import Logo from '../Logo/Logo';
 import "./Nav.css";
 
-const Nav = ({}) => (
+const Nav = () => (
   <nav>
     <div className="nav-wrapper nav-color">
       <Logo text="school" />

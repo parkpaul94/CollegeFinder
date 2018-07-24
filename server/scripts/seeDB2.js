@@ -11,9 +11,9 @@ const config = require('../config/mongoDb/mongoConfig.js');
 //College ID Arr
 const idArr = require('./idDB');
 const idArrLen = idArr.length;
+console.log(idArrLen);
 //College Info Object Arr after DOE API Call
 const newArr = [];
-const idArrIndex = 0; 
 
 const API_BASE_URL = 'https://api.data.gov/ed/collegescorecard/v1/schools';
 
@@ -24,9 +24,9 @@ mongoose.connect(
 	config.test.databaseOption
 );
 
-process.on('unhandledRejection', function(reason, promise) {
+process.on('unhandledRejection', function (reason, promise) {
 	console.log(promise);
-  });
+});
 
 function axiosOptions(urlInput) {
 	return {
@@ -71,82 +71,89 @@ getDOEData = async (schoolDOEId) => {
 			annualInCost: results[2015].cost.tuition.in_state,
 			annualOutCost: results[2015].cost.tuition.out_of_state
 		};
-		console.log(schoolData);
 		return schoolData;
 	} catch (e) {
 		console.log('There is an err', e);
 	}
 }
 
-getDOEDataV2 =  (schoolDOEId) => {
+getDOEDataV2 = (schoolDOEId) => {
 	//i++;
-	console.log('Current Id is' , schoolDOEId);
-	
+	console.log('Current Id is', schoolDOEId);
 	return new Promise((resolve, reject) => {
 		axios(
 			axiosOptions(`${API_BASE_URL}?api_key=${DOEAPIKEY}&id=${schoolDOEId}`)
 		).then(response => {
 			console.log(`Response is: ${response}, data is : ${response.data}`)
-			const results = response.data.results[0];
-			console.log(`Results is ${results}`)
-			const schoolData = {
-				doeId: results.id,
-				location: {
-					lon: results.location.lon,
-					lat: results.location.lat
-				},
-				collegeName: results.school.name,
-				city: results.school.city,
-				state: results.school.state,
-				weblink: results.school.school_url,
-				phoneNum: '800-800-8000',
-				annualAveCost: results['2015'].cost.avg_net_price.overall,
-				graduationRate: results['2015'].completion.completion_rate_4yr_150nt,
-				popularprogram: sortPopPrograms(results['2015'].academics.program_percentage),
-				annualInCost: results[2015].cost.tuition.in_state,
-				annualOutCost: results[2015].cost.tuition.out_of_state
-			};
-			// console.log(schoolData);
-			resolve(schoolData);
+			let results = null;
+			if (response && response.data && response.data.results.length > 0) {
+				results = response.data.results[0];
+			}
+			console.log(`Results for id ${schoolDOEId} is ${results}`)
+			resolve(results);
 		}).catch(err => {
+			console.log(`Error is ${err}`)
 			reject(err);
 		})
 	})
 };
 db.College.remove({});
-// getDOEData(120184);
 
-// setInterval(function () {
-// 	console.log(`CRON JOB At position: ${idArrIndex}`);
-// 	getDOEDataV2(idArr[idArrIndex],idArrIndex).then((data) => {
-// 		newArr[idArrIndex] = data;
-// 	});
-// }, 5000)
 
-function updateDb(id, index) {
-	console.log(`id is: ${id}, ${index}`)
-	getDOEDataV2(id).then((data) => {
-		newArr[index] = data;
-	})
+function updateDb(index) {
+	console.log(`Current index is: ${index}`)
+	if (index >= idArr.length) {
+		console.log('Finished all the update, ending...................')
+		writetoDB()
+	} else {
+		getDOEDataV2(idArr[index]).then((results) => {
+			if (results != null) {
+				const schoolData = {
+					doeId: results.id,
+					location: {
+						lon: results.location.lon,
+						lat: results.location.lat
+					},
+					collegeName: results.school.name,
+					city: results.school.city,
+					state: results.school.state,
+					weblink: results.school.school_url,
+					phoneNum: '800-800-8000',
+					annualAveCost: results['2015'].cost.avg_net_price.overall,
+					graduationRate: results['2015'].completion.completion_rate_4yr_150nt,
+					popularprogram: sortPopPrograms(results['2015'].academics.program_percentage),
+					annualInCost: results[2015].cost.tuition.in_state,
+					annualOutCost: results[2015].cost.tuition.out_of_state
+				};
+				newArr.push(schoolData);
+			} else {
+				console.log(`Getting NULL results for id: ${idArr[index]}, skipping saving to database!`);
+			}
+			 updateDb(index + 1);
+		//	setTimeout(updateDb.bind(this, index+1), 3000)
+		}).catch(err => {
+			console.log(`Getting error for index ${index}, sending again!`)
+		//	setTimeout(updateDb.bind(this, index+1), 10000)			
+			 updateDb(index + 1);
+		});
+	}
 }
 
-idArr.forEach((eachId, index) => {
-	setTimeout(updateDb.bind(this, eachId, index), 10000)	
-})
+updateDb(0);
 
 
 function writetoDB() {
-	console.log(newArr); 
-		db.College
-			.insertMany(newArr)
-			.then(data => {
-				console.log('Successfully wrote to the Database');
-				process.exit(0);
-			})
-			.catch(err => {
-				console.error(err);
-				process.exit(1);
-			});
+	console.log(newArr);
+	db.College
+		.insertMany(newArr)
+		.then(data => {
+			console.log('Successfully wrote to the Database');
+			process.exit(0);
+		})
+		.catch(err => {
+			console.error(err);
+			process.exit(1);
+		});
 };
 
-setTimeout(writetoDB, 30000);
+//setTimeout(writetoDB, 30000);

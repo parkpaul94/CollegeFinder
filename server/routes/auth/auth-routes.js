@@ -31,6 +31,8 @@ module.exports = function (app, passport) {
         failureFlash: true
     }),(req, res) => {
         res.json({
+            username: req.user.email,
+            id: req.user._id,
             message: req.flash('signInMessage'),
         });
     });
