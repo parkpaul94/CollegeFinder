@@ -4,6 +4,7 @@ import College from "../../components/College/College";
 import Jumbotron from "../../components/Jumbotron";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import { Link } from "react-router-dom";
 // import API from "../../utils/API";
 import { Container, Row, Col } from "../../components/Grid";
 
@@ -21,26 +22,6 @@ class Search extends Component {
 
 
 	render() {
-		let colleges=null;
-		if(this.state.showColleges){
-			colleges=(
-				<Row>
-					<Col size="md-4">
-					<College/>
-					</Col>
-
-					<Col size="md-4">
-					<College/>
-					</Col>
-
-					<Col size="md-4">
-					<College/>
-					</Col>
-					
-					
-				</Row>
-			);
-		}
 
 		return (
 			<div>
@@ -60,6 +41,7 @@ class Search extends Component {
 					  />
 					</Col>
 					<Col size="md-2">
+					<Link to="/SingleResult">
 					  <Button
 					    onClick={this.toggleCollegeSearch}
 					    type="success"
@@ -67,6 +49,7 @@ class Search extends Component {
 					  >
 					    Search
 					  </Button>
+						</Link>
 					</Col>
 				    </Row>
 				  </Container>
@@ -75,7 +58,6 @@ class Search extends Component {
 			  </Row>
 			</Container>
 			</Jumbotron>
-			{colleges}
 		    </div>
 		);
 	}

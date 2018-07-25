@@ -36,7 +36,8 @@ const College = () => (
         {/* <div class="more_button button">More Info </div> */}
         <CButton 
           className="button more_button"
-          text="More Info"/>
+          text="More Info"
+          to="/SingleResult"/>
         </div>
     </div>
 );
