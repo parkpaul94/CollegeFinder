@@ -79,7 +79,6 @@ getDOEData = async (schoolDOEId) => {
 }
 
 getDOEDataV2 =  (schoolDOEId) => {
-	//i++;
 	console.log('Current Id is' , schoolDOEId);
 	
 	return new Promise((resolve, reject) => {
@@ -107,7 +106,7 @@ getDOEDataV2 =  (schoolDOEId) => {
 				annualOutCost: results[2015].cost.tuition.out_of_state
 			};
 			// console.log(schoolData);
-			resolve(schoolData);
+			resolve(schoolData); 
 		}).catch(err => {
 			reject(err);
 		})
