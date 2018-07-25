@@ -61,6 +61,11 @@ const CollegeSchema = new Schema({
         }
     ],
 
+    sat: {
+        type: String,
+        trim: true,
+    },
+
     annualInCost: {
         type: String,
         trim: true,
