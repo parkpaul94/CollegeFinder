@@ -1,105 +1,79 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import College from "../../components/College/College";
-import Jumbotron from "../../components/Jumbotron";
+import Collegecard from "../../components/Collegecard";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-// import API from "../../utils/API";
+import API from "../../utils/API";
 import { Container, Row, Col } from "../../components/Grid";
 
 class Search extends Component {
 
-	state ={
-		showColleges: false
+	state = {
+		colleges: [],
+		pageIndex: 0,
 	}
 
+	componentDidMount() {
+		this.loadDefault();
+	};
 
-	toggleCollegeSearch = () =>{
-	const doesSearch = this.state.showColleges;
-	this.setState({showColleges:!doesSearch})
-	}
+	loadDefault = () => {
+		this.setState({
+			colleges: [],
+			pageIndex: 0,
+		});
+	};
+
+	handleInputChange = event => {
+		const { name, value } = event.target;
+		this.setState({
+			[name]: value
+		});
+	};
+
+	handleSearchSubmit = async () => {
+		console.log('Clicked')
+		const collegeRes = await API.getAll();
+		const collegeData = collegeRes.data;
+		console.log(collegeData);
+	};
 
 
 	render() {
-		let colleges=null;
-		if(this.state.showColleges){
-			colleges=(
-				<Row>
-					<Col size="md-4">
-					<College/>
-					</Col>
-
-					<Col size="md-4">
-					<College/>
-					</Col>
-
-					<Col size="md-4">
-					<College/>
-					</Col>
-					
-					
-				</Row>
-			);
-		}
 
 		return (
-			<div>
-			<Jumbotron>
 			<Container>
-			  <Row>
-			    <Col size="md-12">
-				{/* <form> */}
-				  <Container>
-				    <Row>
+				<br/>
+				<br/>
+
+				<Row>
 					<Col size="md-10">
-					  <Input
-					    name="collegeSearch"
-					//     value={this.state.recipeSearch}
-					//     onChange={this.handleInputChange}
-					    placeholder="Search For Your College"
-					  />
+						<Input
+							name="collegeSearch"
+							placeholder="Search For Your College"
+						/>
 					</Col>
 					<Col size="md-2">
-					  <Button
-					    onClick={this.toggleCollegeSearch}
-					    type="success"
-					    className="input-lg"
-					  >
-					    Search
+						<Button
+							onClick={this.handleSearchSubmit}
+							type="success"
+							className="input-lg"
+						>
+							Search
 					  </Button>
 					</Col>
-				    </Row>
-				  </Container>
-				{/* </form> */}
-			    </Col>
-			  </Row>
+				</Row>
+
+				<Row>
+					<Col size="md-4">
+						<Collegecard btnText='View More Details'/>
+					</Col>
+				</Row>
 			</Container>
-			</Jumbotron>
-			{colleges}
-		    </div>
 		);
 	}
+
 };
 
+
 export default Search;
-{/* <Row>
-  <Col size="xs-12">
-    {!this.state.recipes.length ? (
-	<h1 className="text-center">No Recipes to Display</h1>
-    ) : (
-	<RecipeList>
-	  {this.state.recipes.map(recipe => {
-	    return (
-		<RecipeListItem
-		  key={recipe.title}
-		  title={recipe.title}
-		  href={recipe.href}
-		  ingredients={recipe.ingredients}
-		  thumbnail={recipe.thumbnail}
-		/>
-	    );
-	  })}
-	</RecipeList>
-    )}
-  </Col>
-</Row> */}
