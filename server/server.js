@@ -62,11 +62,8 @@ process.on('unhandledRejection', function(reason, promise) {
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-
 app.use(routes);
 
-// require("./routes/api-routes-user&food")(app);
-// require("./routes/api-routes-meal")(app);
 require('./config/passport/passport')(passport, db.User);
 require('./routes/auth/auth-routes')(app, passport);
 

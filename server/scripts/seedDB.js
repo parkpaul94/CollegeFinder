@@ -65,6 +65,7 @@ getDOEData = async (schoolDOEId) => {
 			state: results.school.state,
 			weblink: results.school.school_url,
 			phoneNum: '800-800-8000',
+			sat: results['2015'].Admissions.sat_scores.average.overall,
 			annualAveCost: results['2015'].cost.avg_net_price.overall,
 			graduationRate: results['2015'].completion.completion_rate_4yr_150nt,
 			popularprogram: sortPopPrograms(results['2015'].academics.program_percentage),
@@ -116,7 +117,7 @@ function writetoDB() {
 
 function updateDb(index) {
 	console.log(`Current index is: ${index}`)
-	if (index >= idArr.length) {
+	if (index >= 10) {
 		console.log('Finished all the update, ending...................')
 		writetoDB()
 	} else {
@@ -132,6 +133,7 @@ function updateDb(index) {
 					city: results.school.city,
 					state: results.school.state,
 					weblink: results.school.school_url,
+					sat: results['2015'].admissions.sat_scores.average.overall,
 					phoneNum: '800-800-8000',
 					annualAveCost: results['2015'].cost.avg_net_price.overall,
 					graduationRate: results['2015'].completion.completion_rate_4yr_150nt,
