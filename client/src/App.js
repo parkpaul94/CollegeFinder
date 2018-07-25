@@ -7,7 +7,6 @@ import NoMatch from './pages/NoMatch';
 import Nav from "./components/Nav";
 import Search from './pages/Search';
 
-
 const App = () => (
 	<Router>
 		<div>
@@ -18,7 +17,6 @@ const App = () => (
 			<Route exact path="/Login" component={Login} />
 			<Route exact path="/Signup" component={Signup}/>
 			<Route exact path="/Search" component={Search}/>
-
 			<Route component={NoMatch} />
 		</Switch>
 		</div>
