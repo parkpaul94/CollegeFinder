@@ -8,7 +8,6 @@ import Nav from "./components/Nav";
 import Search from './pages/Search';
 import SingleResult from "./pages/SingleResult";
 
-
 const App = () => (
 	<Router>
 		<div>
