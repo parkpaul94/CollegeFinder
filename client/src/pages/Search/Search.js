@@ -105,7 +105,7 @@ class Search extends Component {
 									return (
 										
 										<Collegecard
-											key={college.collegeName}
+											key={college._id}
 											collegeName={college.collegeName}
 											state={college.state}
 											annualAveCost={college.annualAveCost}
