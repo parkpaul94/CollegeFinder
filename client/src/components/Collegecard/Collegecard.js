@@ -21,12 +21,12 @@ const Collegecard = (props) => (
 
                 <span>
                     <span className="icontainer">Cost:</span>
-                    <span className="state_name">{props.annualAveCost}</span><br />
+                    <span className="state_name"> $${props.annualAveCost}</span><br />
                 </span>
 
                 <span>
                     <span className="icontainer">Weblink: </span>
-                    <span className="state_name">{props.weblink}</span><br />
+                    <span className="state_name"><a href={"http://"+props.weblink}>{props.weblink}</a></span><br />
                 </span>
             </div>
                 <Button
