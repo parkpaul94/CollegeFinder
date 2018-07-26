@@ -10,36 +10,45 @@ class Search extends Component {
 	state = {
 		colleges: [],
 		pageIndex: 0,
+		cardsPerPage: 0,
 		collegesShown: [],
+		searchTerm: '',
 	}
 
 	componentDidMount() {
 		this.loadDefault();
 	};
 
-	loadDefault = () => {
+	loadDefault = async () => {
 		this.setState({
 			colleges: [],
 			pageIndex: 0,
+			cardsPerPage: 9,
 			collegesShown:[],
+			searchTerm: ''
 		});
+
+		if(this.state.colleges.length === 0) {
+			const collegeRes = await API.getAll();
+			const collegeData = collegeRes.data;
+			this.setState({
+				colleges: collegeData.dbModel,
+			});
+			console.log(this.state.colleges)
+		} else {
+			return;
+		};
 	};
 
-	handleInputChange = event => {
-		const { name, value } = event.target;
-		this.setState({
-			[name]: value
-		});
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+          [name]: value
+        });
 	};
-
+	
 	handleSearchSubmit = async () => {
-		console.log('Clicked')
-		const collegeRes = await API.getAll();
-		const collegeData = collegeRes.data;
-		console.log(collegeData);
-		this.setState({
-			colleges: collegeData,
-		})
+		
 	};
 
 	render() {
@@ -52,8 +61,10 @@ class Search extends Component {
 				<Row>
 					<Col size="md-10">
 						<Input
-							name="collegeSearch"
+							name="searchTerm"
 							placeholder="Search For Your College"
+							value={this.state.searchTerm}
+							onChange={this.handleInputChange}
 						/>
 					</Col>
 					<Col size="md-2">

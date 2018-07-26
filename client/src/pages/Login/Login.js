@@ -47,7 +47,7 @@ class Login extends Component {
 					if (!response.data.errmsg) {
 						console.log('Auth API return good')
 						this.setState({
-							redirectTo: '/Home'
+							redirectTo: '/Search'
 						})
 					} else {
 						console.log('Auth API return error')
