@@ -39,7 +39,7 @@ const Collegecard = (props) => (
                     // onClick={''}
                     type="primary"
                     className="input-lg"
-                    link="/SingleResult">
+                    link={"/SingleResult/"+props.id}>
                     MORE
 				</ButtonLink>
         </div>
