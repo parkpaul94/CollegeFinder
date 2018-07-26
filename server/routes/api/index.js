@@ -8,6 +8,6 @@ router.use("/doequery", doeRoutes);
 // College routes
 router.use("/college", collegeRoutes);
 //Search College Logo routes
-router.use('/img', logoRoutes);
+router.use('/logo', logoRoutes);
 
 module.exports = router;

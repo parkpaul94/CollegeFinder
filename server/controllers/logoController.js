@@ -9,7 +9,7 @@ let subscriptionKey = azureConfig.azureApiKey1;
 let host = 'api.cognitive.microsoft.com';
 let path = '/bing/v7.0/images/search';
 
-let term = 'puppies';
+let term = '';
 
 console.log(subscriptionKey);
 
@@ -46,19 +46,15 @@ let bing_image_search = function (search) {
 
     let req = https.request(request_params, response_handler);
     req.end();
-}
-
-if (subscriptionKey.length === 32) {
-    bing_image_search(term);
-} else {
-    console.log('Invalid Bing Search API subscription key!');
-    console.log('Please paste yours into the source code.');
-}
-
-
+};
 
 module.exports = {
     findByName: function (req, res) {
-
+        if (subscriptionKey.length === 32) {
+            bing_image_search(req.params.name);
+        } else {
+            console.log('Invalid Bing Search API subscription key!');
+            console.log('Please paste yours into the source code.');
+        }
     }
 }
