@@ -23,7 +23,7 @@ class Search extends Component {
 		this.setState({
 			colleges: [],
 			pageIndex: 0,
-			cardsPerPage: 9,
+			cardsPerPage: 1,
 			collegesShown:[],
 			searchTerm: ''
 		});
@@ -48,7 +48,15 @@ class Search extends Component {
 	};
 	
 	handleSearchSubmit = async () => {
-		
+
+		let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
+		let endIndex = 1 + this.state.pageIndex * this.state.cardsPerPage;
+		let temArr = this.state.colleges.splice(startIndex,endIndex);
+		temArr.forEach(async (ele) => {
+			let collegeName = `${ele.collegeName} logo`;
+			let collegeLogoURL = await API.getLogo(collegeName);
+			console.log(collegeLogoURL)
+		})
 	};
 
 	render() {

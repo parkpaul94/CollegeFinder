@@ -11,7 +11,7 @@ let path = '/bing/v7.0/images/search';
 
 let term = '';
 
-console.log(subscriptionKey);
+let returnData = {};
 
 let response_handler = function (response) {
     let body = '';
@@ -27,24 +27,31 @@ let response_handler = function (response) {
         body = JSON.stringify(JSON.parse(body), null, '  ');
         console.log('\nJSON Response:\n');
         console.log(body);
+        returnData = body;
     });
     response.on('error', function (e) {
         console.log('Error: ' + e.message);
     });
 };
 
-let bing_image_search = function (search) {
+let bing_image_search = async function (search) {
   console.log('Searching images for: ' + term);
   let request_params = {
         method : 'GET',
         hostname : host,
         path : path + '?q=' + encodeURIComponent(search),
+        count: 2,
         headers : {
             'Ocp-Apim-Subscription-Key' : subscriptionKey,
-        }
+        },
+        aspect: 'Square',
+        height: '500',
+        width: '500',
+
     };
 
-    let req = https.request(request_params, response_handler);
+    let req = await https.request(request_params, response_handler);
+
     req.end();
 };
 
@@ -52,6 +59,7 @@ module.exports = {
     findByName: function (req, res) {
         if (subscriptionKey.length === 32) {
             bing_image_search(req.params.name);
+            res.json(returnData);
         } else {
             console.log('Invalid Bing Search API subscription key!');
             console.log('Please paste yours into the source code.');
