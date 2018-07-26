@@ -36,8 +36,10 @@ class Search extends Component {
 		const collegeRes = await API.getAll();
 		const collegeData = collegeRes.data;
 		console.log(collegeData);
+		this.setState({
+			colleges: collegeData,
+		})
 	};
-
 
 	render() {
 
