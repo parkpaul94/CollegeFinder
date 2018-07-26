@@ -117,7 +117,7 @@ function writetoDB() {
 
 function updateDb(index) {
 	console.log(`Current index is: ${index}`)
-	if (index >= 10) {
+	if (index >= idArrLen) {
 		console.log('Finished all the update, ending...................')
 		writetoDB()
 	} else {

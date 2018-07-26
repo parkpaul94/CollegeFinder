@@ -3,7 +3,7 @@ import "./Collegecard.css";
 
 const Collegecard = (props) => (
 
-    <div class="college_content_container">
+    <div className="college_content_container">
 
         <div className="college_container">
 
