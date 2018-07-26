@@ -1,14 +1,16 @@
 import React from "react";
 import "./Collegecard.css";
+import ButtonLink from '../ButtonLink';
+import Button from '../Button';
 
 const Collegecard = (props) => (
 
     <div className="college_content_container">
 
         <div className="college_container">
-
+            <h1 className='college_name'>University Name</h1>
             <div className="image_container">
-                <img src={props.image} alt={props.name} />
+                <img src={props.image} alt={props.collegeName} />
             </div>
 
             <div className="info_container">
@@ -18,20 +20,28 @@ const Collegecard = (props) => (
                 </span>
 
                 <span>
-                    <span className="icontainer">SAT: </span>
-                    <span className="state_name">{props.score}</span><br />
+                    <span className="icontainer">Cost:</span>
+                    <span className="state_name">{props.annualAveCost}</span><br />
                 </span>
 
                 <span>
-                    <span className="icontainer">Type: </span>
-                    <span className="state_name">{props.type}</span><br />
+                    <span className="icontainer">Weblink: </span>
+                    <span className="state_name">{props.weblink}</span><br />
                 </span>
             </div>
-
-            <div className="button_container">
-                <div className={props.className}>{props.text}
-                </div>
-            </div>
+                <Button
+                    // onClick={''}
+                    type="primary"
+                    className="input-lg">
+                    ADD
+				</Button>
+                <ButtonLink
+                    // onClick={''}
+                    type="primary"
+                    className="input-lg"
+                    link="/SingleResult">
+                    MORE
+				</ButtonLink>
         </div>
     </div>
 
