@@ -36,9 +36,11 @@ class Search extends Component {
 		console.log('Clicked')
 		const collegeRes = await API.getAll();
 		const collegeData = collegeRes.data;
+
+		debugger;
 		console.log(collegeData);
 		this.setState({
-			colleges: [collegeData],
+			colleges: collegeData.dbModel,
 		})
 	};
 
@@ -67,26 +69,29 @@ class Search extends Component {
 					</Col>
 				</Row>
 
-				<Row>
-					<Col size="md-12">
-							{!this.state.colleges.length ? (
-								<h1 className="text-center">Please Search for Colleges</h1>
-							) : (
-								<Col size="md-4">
-									<Container>
-										{this.state.colleges.map(college => {
-											return (
-												<Collegecard
-													key={college.collegeName}
-													collegeName={college.collegeName}
-												/>
-											);
-										})}
-									</Container>
-								</Col>
-								)}
-					</Col>
-				</Row>
+				<div>
+					{!this.state.colleges.length ? (
+						<h1 className="text-center">Please Search for Colleges</h1>
+					) : (<div style={{
+						display: 'flex',
+						flexWrap: 'wrap'
+					}}>
+								{this.state.colleges.map(college => {
+									return (
+										
+										<Collegecard
+											key={college.collegeName}
+											collegeName={college.collegeName}
+											state={college.state}
+											annualAveCost={college.annualAveCost}
+											weblink={college.weblink}
+										/>
+										
+									);
+								})}
+							</div>
+						)}
+				</div>
 
 
 			</Container>

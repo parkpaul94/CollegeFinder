@@ -8,7 +8,7 @@ const Collegecard = (props) => (
     <div className="college_content_container">
 
         <div className="college_container">
-            <h1 className='college_name'>University Name{props.collegeName}</h1>
+            <h1 className='college_name'>{props.collegeName}</h1>
             <div className="image_container">
                 <img src={props.image} alt={props.collegeName} />
             </div>
