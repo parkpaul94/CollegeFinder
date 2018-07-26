@@ -8,7 +8,7 @@ import { Container, Row, Col } from "../../components/Grid";
 class Search extends Component {
 
 	state = {
-		colleges: [],
+		colleges: [1],
 		pageIndex: 0,
 		collegesShown: [],
 	}
@@ -36,10 +36,9 @@ class Search extends Component {
 		console.log('Clicked')
 		const collegeRes = await API.getAll();
 		const collegeData = collegeRes.data;
-		this.setState({ colleges: [collegeData] })
 		console.log(collegeData);
 		this.setState({
-			colleges: collegeData,
+			colleges: [collegeData],
 		})
 	};
 
@@ -70,7 +69,6 @@ class Search extends Component {
 
 				<Row>
 					<Col size="md-12">
-						<Col size="md-12">
 							{!this.state.colleges.length ? (
 								<h1 className="text-center">Please Search for Colleges</h1>
 							) : (
@@ -80,13 +78,13 @@ class Search extends Component {
 											return (
 												<Collegecard
 													key={college.collegeName}
+													collegeName={college.collegeName}
 												/>
 											);
 										})}
 									</Container>
 								</Col>
 								)}
-						</Col>
 					</Col>
 				</Row>
 
