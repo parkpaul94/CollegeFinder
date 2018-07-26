@@ -8,7 +8,7 @@ import { Container, Row, Col } from "../../components/Grid";
 class Search extends Component {
 
 	state = {
-		colleges: [],
+		colleges: [1],
 		pageIndex: 0,
 		cardsPerPage: 0,
 		collegesShown: [],
@@ -56,6 +56,14 @@ class Search extends Component {
 			let collegeName = `${ele.collegeName} logo`;
 			let collegeLogoURL = await API.getLogo(collegeName);
 			console.log(collegeLogoURL)
+// 		console.log('Clicked')
+// 		const collegeRes = await API.getAll();
+// 		const collegeData = collegeRes.data;
+
+// 		debugger;
+// 		console.log(collegeData);
+// 		this.setState({
+// 			colleges: collegeData.dbModel,
 		})
 	};
 
@@ -63,8 +71,8 @@ class Search extends Component {
 
 		return (
 			<Container>
-				<br/>
-				<br/>
+				<br />
+				<br />
 
 				<Row>
 					<Col size="md-10">
@@ -78,7 +86,7 @@ class Search extends Component {
 					<Col size="md-2">
 						<Button
 							onClick={this.handleSearchSubmit}
-							type="success"
+							type="primary"
 							className="input-lg"
 						>
 							Search
@@ -86,11 +94,31 @@ class Search extends Component {
 					</Col>
 				</Row>
 
-				<Row>
-					<Col size="md-4">
-						<Collegecard btnText='View More Details'/>
-					</Col>
-				</Row>
+				<div>
+					{!this.state.colleges.length ? (
+						<h1 className="text-center">Please Search for Colleges</h1>
+					) : (<div style={{
+						display: 'flex',
+						flexWrap: 'wrap'
+					}}>
+								{this.state.colleges.map(college => {
+									return (
+										
+										<Collegecard
+											key={college.collegeName}
+											collegeName={college.collegeName}
+											state={college.state}
+											annualAveCost={college.annualAveCost}
+											weblink={college.weblink}
+										/>
+										
+									);
+								})}
+							</div>
+						)}
+				</div>
+
+
 			</Container>
 		);
 	}
