@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Collegecard from "../../components/Collegecard";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -11,6 +10,7 @@ class Search extends Component {
 	state = {
 		colleges: [],
 		pageIndex: 0,
+		collegesShown: [],
 	}
 
 	componentDidMount() {
@@ -21,6 +21,7 @@ class Search extends Component {
 		this.setState({
 			colleges: [],
 			pageIndex: 0,
+			collegesShown:[],
 		});
 	};
 
