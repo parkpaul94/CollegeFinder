@@ -35,6 +35,7 @@ class Search extends Component {
 		console.log('Clicked')
 		const collegeRes = await API.getAll();
 		const collegeData = collegeRes.data;
+		this.setState({ colleges: [collegeData] })
 		console.log(collegeData);
 	};
 
@@ -43,8 +44,8 @@ class Search extends Component {
 
 		return (
 			<Container>
-				<br/>
-				<br/>
+				<br />
+				<br />
 
 				<Row>
 					<Col size="md-10">
@@ -56,7 +57,7 @@ class Search extends Component {
 					<Col size="md-2">
 						<Button
 							onClick={this.handleSearchSubmit}
-							type="success"
+							type="primary"
 							className="input-lg"
 						>
 							Search
@@ -65,10 +66,28 @@ class Search extends Component {
 				</Row>
 
 				<Row>
-					<Col size="md-4">
-						<Collegecard btnText='View More Details'/>
+					<Col size="md-12">
+						<Col size="md-12">
+							{!this.state.colleges.length ? (
+								<h1 className="text-center">Please Search for Colleges</h1>
+							) : (
+								<Col size="md-4">
+									<Container>
+										{this.state.colleges.map(college => {
+											return (
+												<Collegecard
+													key={college.collegeName}
+												/>
+											);
+										})}
+									</Container>
+								</Col>
+								)}
+						</Col>
 					</Col>
 				</Row>
+
+
 			</Container>
 		);
 	}
