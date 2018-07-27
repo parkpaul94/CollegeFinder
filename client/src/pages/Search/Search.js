@@ -52,18 +52,19 @@ class Search extends Component {
 		let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
 		let endIndex = 1 + this.state.pageIndex * this.state.cardsPerPage;
 		let temArr = this.state.colleges.splice(startIndex,endIndex);
-		temArr.forEach(async (ele) => {
-			let collegeName = `${ele.collegeName} logo`;
-			let collegeLogoURL = await API.getLogo(collegeName);
-			console.log(collegeLogoURL)
-// 		console.log('Clicked')
-// 		const collegeRes = await API.getAll();
-// 		const collegeData = collegeRes.data;
 
-// 		debugger;
-// 		console.log(collegeData);
-// 		this.setState({
-// 			colleges: collegeData.dbModel,
+		// temArr.forEach(ele => 
+		// {
+		// 	let collegeName = `${ele.collegeName} logo`;
+		// 	let collegeLogoURL = await API.getLogo(collegeName);
+		// 	console.log(collegeLogoURL);
+		// 
+
+		const collegeRes = await API.getAll();
+		const collegeData = collegeRes.data;
+		console.log(collegeData);
+		this.setState({
+			colleges: collegeData.dbModel,
 		})
 	};
 
