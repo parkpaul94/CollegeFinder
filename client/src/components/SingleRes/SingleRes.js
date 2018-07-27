@@ -16,7 +16,7 @@ const SingleRes = (props) => (
           <h2>{props.weblink}</h2>
         </Col>
         <Col size='md-6'>
-          <SimpleMap/>
+          <SimpleMap lat={props.latitude} lng={props.longitude} text={props.collegeName}/>
         </Col>
       </Row>
       <Row><Col size='md-12'><h1>Quick Information</h1></Col></Row>
