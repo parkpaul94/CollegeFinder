@@ -12,5 +12,9 @@ export default {
   
   getLogo: function(name) {
     return axios.get(`/api/logo/${name}`)
+  },
+
+  getSingleResult: function(id){
+    return axios.get(`/api/college/${id}`)
   }
 };

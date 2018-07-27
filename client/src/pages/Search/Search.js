@@ -49,19 +49,18 @@ class Search extends Component {
 	
 	handleSearchSubmit = async () => {
 
-		let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
-		let endIndex = 1 + this.state.pageIndex * this.state.cardsPerPage;
-		let temArr = this.state.colleges.splice(startIndex,endIndex);
-
-		// temArr.forEach(ele => 
-		// {
+		// let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
+		// let endIndex = 1 + this.state.pageIndex * this.state.cardsPerPage;
+		// let temArr = this.state.colleges.splice(startIndex,endIndex);
+		// temArr.forEach(async (ele) => {
 		// 	let collegeName = `${ele.collegeName} logo`;
 		// 	let collegeLogoURL = await API.getLogo(collegeName);
-		// 	console.log(collegeLogoURL);
-		// 
-
+		// 	console.log(collegeLogoURL)
+		console.log('Clicked')
 		const collegeRes = await API.getAll();
 		const collegeData = collegeRes.data;
+
+		debugger;
 		console.log(collegeData);
 		this.setState({
 			colleges: collegeData.dbModel,
@@ -102,11 +101,11 @@ class Search extends Component {
 						display: 'flex',
 						flexWrap: 'wrap'
 					}}>
-								{this.state.colleges.map(college => {
+								{this.state.colleges.map((college,i) => {
 									return (
 										
 										<Collegecard
-											key={college._id}
+											key={i}
 											id={college._id}
 											collegeName={college.collegeName}
 											state={college.state}
