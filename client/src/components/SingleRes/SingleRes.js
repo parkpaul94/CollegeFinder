@@ -11,9 +11,9 @@ const SingleRes = (props) => (
           <Thumbnail src={'' || "https://placehold.it/600x600"} />
         </Col>
         <Col size="md-3">
-          <h1>University{props.title}</h1>
-          <h2>City, State: {props.city}{props.state}</h2>
-          <h2>Weblink: {props.weblink}</h2>
+          <h1>{props.collegeName}</h1>
+          <h2>{props.city}{props.state}</h2>
+          <h2>{props.weblink}</h2>
         </Col>
         <Col size='md-6'>
           <SimpleMap/>
@@ -32,8 +32,8 @@ const SingleRes = (props) => (
         <Col size='md-6'>
         <h1>Popular Programs</h1>
         <h3>1.{props.popularprogram}</h3>
-        <h3>2.{props.popularprogram}</h3>
-        <h3>3.{props.popularprogram}</h3>
+        <h3>2.{props.popularprogram2}</h3>
+        <h3>3.{props.popularprogram3}</h3>
         </Col>
       </Row>
       <Row><Col size='md-12'><h1>Tution</h1></Col></Row>
