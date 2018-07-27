@@ -33,7 +33,7 @@ const SingleRes = (props) => (
         <h1>Popular Programs</h1>
         <h3>1.{props.popularprogram}</h3>
         <h3>2.{props.popularprogram2}</h3>
-        <h3>3.{props.popularprogram3}</h3>
+        <h3>3.{props.popularprogram}</h3>
         </Col>
       </Row>
       <Row><Col size='md-12'><h1>Tution</h1></Col></Row>
