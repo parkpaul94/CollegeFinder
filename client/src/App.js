@@ -18,7 +18,7 @@ const App = () => (
 			<Route exact path="/Login" component={Login} />
 			<Route exact path="/Signup" component={Signup}/>
 			<Route exact path="/Search" component={Search}/>
-			<Route exact path="/SingleResult" component={SingleResult}/>
+			<Route exact path="/SingleResult/:id" component={SingleResult}/>
 			<Route component={NoMatch} />
 		</Switch>
 		</div>
