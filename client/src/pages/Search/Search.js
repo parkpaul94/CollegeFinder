@@ -8,11 +8,13 @@ import { Container, Row, Col } from "../../components/Grid";
 class Search extends Component {
 
 	state = {
-		colleges: [1],
+		colleges: [],
 		pageIndex: 0,
 		cardsPerPage: 0,
 		collegesShown: [],
 		searchTerm: '',
+		notice: '',
+		img:''
 	}
 
 	componentDidMount() {
@@ -20,15 +22,18 @@ class Search extends Component {
 	};
 
 	loadDefault = async () => {
+
 		this.setState({
 			colleges: [],
 			pageIndex: 0,
-			cardsPerPage: 1,
-			collegesShown:[],
-			searchTerm: ''
+			cardsPerPage: 6,
+			collegesShown: [],
+			searchTerm: '',
+			notice: 'Please click to search for colleges',
+			img:''
 		});
 
-		if(this.state.colleges.length === 0) {
+		if (this.state.colleges.length === 0) {
 			const collegeRes = await API.getAll();
 			const collegeData = collegeRes.data;
 			this.setState({
@@ -40,31 +45,116 @@ class Search extends Component {
 		};
 	};
 
-    handleInputChange = event => {
-        const { name, value } = event.target;
-        this.setState({
-          [name]: value
-        });
+	handleInputChange = event => {
+		const { name, value } = event.target;
+		this.setState({
+			[name]: value
+		});
 	};
-	
+
 	handleSearchSubmit = async () => {
 
-		// let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
-		// let endIndex = 1 + this.state.pageIndex * this.state.cardsPerPage;
-		// let temArr = this.state.colleges.splice(startIndex,endIndex);
-		// temArr.forEach(async (ele) => {
-		// 	let collegeName = `${ele.collegeName} logo`;
-		// 	let collegeLogoURL = await API.getLogo(collegeName);
-		// 	console.log(collegeLogoURL)
-		console.log('Clicked')
-		const collegeRes = await API.getAll();
-		const collegeData = collegeRes.data;
-
-		debugger;
-		console.log(collegeData);
 		this.setState({
-			colleges: collegeData.dbModel,
-		})
+			notice: ''
+		});
+		let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
+		let endIndex = 6 + this.state.pageIndex * this.state.cardsPerPage;
+		let temArr = [...this.state.colleges];
+		let currArr = temArr.slice(startIndex, endIndex);
+
+		for (let index=0; index<currArr.length; index++) {
+			let collegeName = `${currArr[index].collegeName} logo`;
+			let logoAPIReturnObj = await API.getLogo(collegeName);
+			let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
+			currArr[index] = Object.assign(currArr[index], { 'logoUrl': collegeLogoURL })
+		};
+
+		this.setState({
+			collegesShown: currArr
+		});
+
+	};
+
+	handlePreviousPageSubmit = async () => {
+
+		if (this.state.collegesShown.length === 0) {
+			this.setState({
+				notice: 'Please click to search for colleges'
+			});
+		}
+		else if (this.state.pageIndex === 0) {
+			this.setState({
+				notice: 'This is the first page'
+			});
+			return;
+			
+		} else {
+			this.setState({
+				notice: '',
+				pageIndex: this.state.pageIndex-1,
+				collegesShown: []
+			});
+
+			let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
+			let endIndex = 6 + this.state.pageIndex * this.state.cardsPerPage;
+			console.log(`The Start Index is ${startIndex} and the End index is ${endIndex}`)
+			let temArr = [...this.state.colleges];
+			let currArr = temArr.slice(startIndex, endIndex);
+			console.log(currArr);
+
+			for (let index=0; index<temArr.length; index++) {
+				let collegeName = `${temArr[index].collegeName} logo`;
+				let logoAPIReturnObj = await API.getLogo(collegeName);
+				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
+				temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
+			};
+
+			this.setState({
+				collegesShown: currArr
+			});
+		}
+	};
+
+
+	handleNextPageSubmit = async () => {
+
+		if (this.state.collegesShown.length === 0) {
+			this.setState({
+				notice: 'Please click to search for colleges'
+			});
+		}
+
+		else if ( this.state.pageIndex === (this.state.colleges.length / 9 - 1)) {
+			this.setState({
+				notice: 'This is the last page'
+			});
+			return;
+		} else {
+			this.setState({
+				notice: '',
+				pageIndex: this.state.pageIndex+1,
+				collegesShown: []
+			});
+
+			let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
+			let endIndex = 6 + this.state.pageIndex * this.state.cardsPerPage;
+			console.log(`The Start Index is ${startIndex} and the End index is ${endIndex}`)
+
+			let temArr = this.state.colleges;
+
+			temArr = temArr.slice(startIndex, endIndex);
+
+			for (let index=0; index<temArr.length; index++) {
+				let collegeName = `${temArr[index].collegeName} logo`;
+				let logoAPIReturnObj = await API.getLogo(collegeName);
+				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
+				temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
+			};
+
+			this.setState({
+				collegesShown: temArr
+			});
+		}
 	};
 
 	render() {
@@ -92,31 +182,61 @@ class Search extends Component {
 							Search
 					  </Button>
 					</Col>
+
 				</Row>
 
+				<Row>
+					<Col size='md-3'>
+					</Col>
+					<Col size="md-3">
+						<Button
+							onClick={this.handlePreviousPageSubmit}
+							type="sucess"
+							className="input-lg"
+						>
+							Previous Page
+					  </Button>
+					</Col>
+					<Col size="md-3">
+
+						<Button
+							onClick={this.handleNextPageSubmit}
+							type="success"
+							className="input-lg"
+						>
+							Next Page
+					  </Button>
+					</Col>
+					<Col size='md-3'>
+					</Col>
+
+				</Row>
+
+				<h1 className="text-center">{this.state.notice}</h1>
+
 				<div>
-					{!this.state.colleges.length ? (
-						<h1 className="text-center">Please Search for Colleges</h1>
-					) : (<div style={{
+
+					<div style={{
 						display: 'flex',
 						flexWrap: 'wrap'
 					}}>
-								{this.state.colleges.map((college,i) => {
-									return (
-										
-										<Collegecard
-											key={i}
-											id={college._id}
-											collegeName={college.collegeName}
-											state={college.state}
-											annualAveCost={college.annualAveCost}
-											weblink={college.weblink}
-										/>
-										
-									);
-								})}
-							</div>
-						)}
+						{this.state.collegesShown.map((college, i) => {
+							return (
+
+								<Collegecard
+									key={i}
+									image={college.logoUrl}
+									id={college._id}
+									collegeName={college.collegeName}
+									state={college.state}
+									annualAveCost={college.annualAveCost}
+									weblink={college.weblink}
+								/>
+
+							);
+						})}
+					</div>
+
 				</div>
 
 

@@ -15,9 +15,7 @@ class SingleResult extends Component{
 	};
 
 	loadDefault = async () => {
-		// this.setState({
-		// 	college: []
-    // });
+
     const collegeRes = await API.getSingleResult(this.props.match.params.id);
 		const collegeData = collegeRes.data;
 		console.log(collegeData);
@@ -25,20 +23,7 @@ class SingleResult extends Component{
 			college: collegeData
     });
     this.setState({hasResult:true});
-    
-  // console.log(this.props.match.params.id);
-  
 
-	// 	if(this.state.college.length === 0) {
-	// 		const collegeRes = await API.getSingleResult(this.props.match.params.id);
-	// 		const collegeData = collegeRes.data;
-	// 		this.setState({
-	// 			college: collegeData.dbModel,
-	// 		});
-	// 		console.log(this.state.colleges)
-	// 	} else {
-	// 		return;
-	// 	};
 	};
 
     handleInputChange = event => {
@@ -48,24 +33,6 @@ class SingleResult extends Component{
         });
 	};
 	
-	// handleSearchSubmit = async () => {
-
-	// 	// let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
-	// 	// let endIndex = 1 + this.state.pageIndex * this.state.cardsPerPage;
-	// 	// let temArr = this.state.colleges.splice(startIndex,endIndex);
-	// 	// temArr.forEach(async (ele) => {
-	// 	// 	let collegeName = `${ele.collegeName} logo`;
-	// 	// 	let collegeLogoURL = await API.getLogo(collegeName);
-	// 	// 	console.log(collegeLogoURL)
-	// 	console.log('Clicked')
-	// 	const collegeRes = await API.getSingleResult(this.props.match.params.id);
-	// 	const collegeData = collegeRes.data;
-	// 	console.log(collegeData);
-	// 	this.setState({
-	// 		college: collegeData.dbModel,
-	// 	})
-	// };
-
     render(){
         return(
     <Container>
@@ -89,6 +56,8 @@ class SingleResult extends Component{
                       popularprogram3={this.state.college.popularprogram[2]}
                       annualInCost={this.state.college.annualInCost}
                       annualOutCost={this.state.college.annualOutCost}
+                      latitude={this.state.college.location.lat}
+                      longitude={this.state.college.location.lon}
                       />
                 </Container>
               )}
