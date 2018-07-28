@@ -13,6 +13,7 @@ class Search extends Component {
 		cardsPerPage: 0,
 		collegesShown: [],
 		searchTerm: '',
+		notice: ''
 	}
 
 	componentDidMount() {
@@ -26,7 +27,8 @@ class Search extends Component {
 			pageIndex: 0,
 			cardsPerPage: 9,
 			collegesShown: [],
-			searchTerm: ''
+			searchTerm: '',
+			notice: 'Please click to search for colleges'
 		});
 
 		if (this.state.colleges.length === 0) {
@@ -50,23 +52,101 @@ class Search extends Component {
 
 	handleSearchSubmit = async () => {
 
+		this.setState({
+			notice: ''
+		});
 		let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
 		let endIndex = 9 + this.state.pageIndex * this.state.cardsPerPage;
-		let temArr = this.state.colleges.splice(startIndex, endIndex);
+		let temArr = this.state.colleges;
+		temArr = temArr.splice(startIndex, endIndex);
 
-		console.log(temArr);
-
-		temArr.map( async function (ele, index){
+		temArr.map(async function (ele, index) {
 			let collegeName = `${temArr[index].collegeName} logo`;
 			let logoAPIReturnObj = await API.getLogo(collegeName);
 			let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
-			temArr[index] = Object.assign(temArr[index], {'logoUrl': collegeLogoURL})
+			temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
 		})
 
 		this.setState({
 			collegesShown: temArr
 		});
 
+	};
+
+	handlePreviousPageSubmit = async () => {
+
+		if (this.state.collegesShown.length === 0) {
+			this.setState({
+				notice: 'Please click to search for colleges'
+			});
+		}
+		else if (this.state.pageIndex === 0) {
+			this.setState({
+				notice: 'This is the first page'
+			});
+			return;
+			
+		} else {
+			this.setState({
+				pageIndex: this.state.pageIndex--,
+				collegesShown: []
+			});
+
+			let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
+			let endIndex = 9 + this.state.pageIndex * this.state.cardsPerPage;
+			let temArr = this.state.colleges;
+			temArr = temArr.splice(startIndex, endIndex);
+
+			temArr.map(async function (ele, index) {
+				let collegeName = `${temArr[index].collegeName} logo`;
+				let logoAPIReturnObj = await API.getLogo(collegeName);
+				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
+				temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
+			})
+
+			this.setState({
+				collegesShown: temArr
+			});
+		}
+	};
+
+
+	handleNextPageSubmit = async () => {
+
+		if (this.state.collegesShown.length === 0) {
+			this.setState({
+				notice: 'Please click to search for colleges'
+			});
+		}
+
+		else if ( this.state.pageIndex === (this.state.colleges.length / 9 - 1)) {
+			this.setState({
+				notice: 'This is the last page'
+			});
+			return;
+		} else {
+			this.setState({
+				pageIndex: this.state.pageIndex++,
+				collegesShown: []
+			});
+
+			let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
+			let endIndex = 9 + this.state.pageIndex * this.state.cardsPerPage;
+			let temArr = this.state.colleges;
+
+			temArr = temArr.splice(startIndex, endIndex);
+
+			temArr.map(async function (ele, index) {
+				let collegeName = `${temArr[index].collegeName} logo`;
+				let logoAPIReturnObj = await API.getLogo(collegeName);
+				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
+				temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
+			})
+
+			this.setState({
+				collegesShown: temArr
+			});
+		}
 	};
 
 	render() {
@@ -94,12 +174,41 @@ class Search extends Component {
 							Search
 					  </Button>
 					</Col>
+
 				</Row>
 
+				<Row>
+					<Col size='md-3'>
+					</Col>
+					<Col size="md-3">
+						<Button
+							onClick={this.handlePreviousPageSubmit}
+							type="sucess"
+							className="input-lg"
+						>
+							Previous Page
+					  </Button>
+					</Col>
+					<Col size="md-3">
+
+						<Button
+							onClick={this.handleNextPageSubmit}
+							type="success"
+							className="input-lg"
+						>
+							Next Page
+					  </Button>
+					</Col>
+					<Col size='md-3'>
+					</Col>
+
+				</Row>
+
+				<h1 className="text-center">{this.state.notice}</h1>
+
 				<div>
-					{!this.state.collegesShown.length ? (
-						<h1 className="text-center">Please Search for Colleges</h1>
-					) : (<div style={{
+
+					<div style={{
 						display: 'flex',
 						flexWrap: 'wrap'
 					}}>
@@ -118,7 +227,7 @@ class Search extends Component {
 							);
 						})}
 					</div>
-						)}
+
 				</div>
 
 
