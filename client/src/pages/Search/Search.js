@@ -57,18 +57,18 @@ class Search extends Component {
 		});
 		let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
 		let endIndex = 9 + this.state.pageIndex * this.state.cardsPerPage;
-		let temArr = this.state.colleges;
-		temArr = temArr.splice(startIndex, endIndex);
+		let temArr = [...this.state.colleges];
+		let currArr = temArr.slice(startIndex, endIndex);
 
-		temArr.map(async function (ele, index) {
-			let collegeName = `${temArr[index].collegeName} logo`;
+		currArr.map(async function (ele, index) {
+			let collegeName = `${currArr[index].collegeName} logo`;
 			let logoAPIReturnObj = await API.getLogo(collegeName);
 			let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
-			temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
+			currArr[index] = Object.assign(currArr[index], { 'logoUrl': collegeLogoURL })
 		})
 
 		this.setState({
-			collegesShown: temArr
+			collegesShown: currArr
 		});
 
 	};
@@ -88,24 +88,27 @@ class Search extends Component {
 			
 		} else {
 			this.setState({
-				pageIndex: this.state.pageIndex--,
+				notice: '',
+				pageIndex: this.state.pageIndex-1,
 				collegesShown: []
 			});
 
 			let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
 			let endIndex = 9 + this.state.pageIndex * this.state.cardsPerPage;
-			let temArr = this.state.colleges;
-			temArr = temArr.splice(startIndex, endIndex);
+			console.log(`The Start Index is ${startIndex} and the End index is ${endIndex}`)
+			let temArr = [...this.state.colleges];
+			let currArr = temArr.slice(startIndex, endIndex);
+			console.log(currArr);
 
-			temArr.map(async function (ele, index) {
-				let collegeName = `${temArr[index].collegeName} logo`;
+			currArr.forEach(async function (ele, index) {
+				let collegeName = `${currArr[index].collegeName} logo`;
 				let logoAPIReturnObj = await API.getLogo(collegeName);
 				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
-				temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
+				currArr[index] = Object.assign(currArr[index], { 'logoUrl': collegeLogoURL })
 			})
 
 			this.setState({
-				collegesShown: temArr
+				collegesShown: currArr
 			});
 		}
 	};
@@ -126,17 +129,20 @@ class Search extends Component {
 			return;
 		} else {
 			this.setState({
-				pageIndex: this.state.pageIndex++,
+				notice: '',
+				pageIndex: this.state.pageIndex+1,
 				collegesShown: []
 			});
 
 			let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
 			let endIndex = 9 + this.state.pageIndex * this.state.cardsPerPage;
+			console.log(`The Start Index is ${startIndex} and the End index is ${endIndex}`)
+
 			let temArr = this.state.colleges;
 
-			temArr = temArr.splice(startIndex, endIndex);
+			temArr = temArr.slice(startIndex, endIndex);
 
-			temArr.map(async function (ele, index) {
+			temArr.forEach(async function (ele, index) {
 				let collegeName = `${temArr[index].collegeName} logo`;
 				let logoAPIReturnObj = await API.getLogo(collegeName);
 				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
@@ -217,6 +223,7 @@ class Search extends Component {
 
 								<Collegecard
 									key={i}
+									img={college.logoUrl}
 									id={college._id}
 									collegeName={college.collegeName}
 									state={college.state}
