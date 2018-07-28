@@ -4,6 +4,8 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import API from "../../utils/API";
 import { Container, Row, Col } from "../../components/Grid";
+import Spinner from 'react-spinkit';
+import './Search.css'
 
 class Search extends Component {
 
@@ -14,7 +16,8 @@ class Search extends Component {
 		collegesShown: [],
 		searchTerm: '',
 		notice: '',
-		img:''
+		img: '',
+		isCallingAPI: false,
 	}
 
 	componentDidMount() {
@@ -30,7 +33,8 @@ class Search extends Component {
 			collegesShown: [],
 			searchTerm: '',
 			notice: 'Please click to search for colleges',
-			img:''
+			img: '',
+			isCallingAPI: false,
 		});
 
 		if (this.state.colleges.length === 0) {
@@ -55,14 +59,15 @@ class Search extends Component {
 	handleSearchSubmit = async () => {
 
 		this.setState({
-			notice: ''
+			notice: '',
+			isCallingAPI: true,
 		});
 		let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
 		let endIndex = 6 + this.state.pageIndex * this.state.cardsPerPage;
 		let temArr = [...this.state.colleges];
 		let currArr = temArr.slice(startIndex, endIndex);
 
-		for (let index=0; index<currArr.length; index++) {
+		for (let index = 0; index < currArr.length; index++) {
 			let collegeName = `${currArr[index].collegeName} logo`;
 			let logoAPIReturnObj = await API.getLogo(collegeName);
 			let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
@@ -70,7 +75,8 @@ class Search extends Component {
 		};
 
 		this.setState({
-			collegesShown: currArr
+			collegesShown: currArr,
+			isCallingAPI: false,
 		});
 
 	};
@@ -87,12 +93,13 @@ class Search extends Component {
 				notice: 'This is the first page'
 			});
 			return;
-			
+
 		} else {
 			this.setState({
 				notice: '',
-				pageIndex: this.state.pageIndex-1,
-				collegesShown: []
+				pageIndex: this.state.pageIndex - 1,
+				collegesShown: [],
+				isCallingAPI: true,
 			});
 
 			let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
@@ -102,7 +109,7 @@ class Search extends Component {
 			let currArr = temArr.slice(startIndex, endIndex);
 			console.log(currArr);
 
-			for (let index=0; index<temArr.length; index++) {
+			for (let index = 0; index < temArr.length; index++) {
 				let collegeName = `${temArr[index].collegeName} logo`;
 				let logoAPIReturnObj = await API.getLogo(collegeName);
 				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
@@ -110,7 +117,8 @@ class Search extends Component {
 			};
 
 			this.setState({
-				collegesShown: currArr
+				collegesShown: currArr,
+				isCallingAPI: false,
 			});
 		}
 	};
@@ -124,7 +132,7 @@ class Search extends Component {
 			});
 		}
 
-		else if ( this.state.pageIndex === (this.state.colleges.length / 9 - 1)) {
+		else if (this.state.pageIndex === (this.state.colleges.length / 9 - 1)) {
 			this.setState({
 				notice: 'This is the last page'
 			});
@@ -132,8 +140,9 @@ class Search extends Component {
 		} else {
 			this.setState({
 				notice: '',
-				pageIndex: this.state.pageIndex+1,
-				collegesShown: []
+				pageIndex: this.state.pageIndex + 1,
+				collegesShown: [],
+				isCallingAPI: true,
 			});
 
 			let startIndex = 0 + this.state.pageIndex * this.state.cardsPerPage;
@@ -144,7 +153,7 @@ class Search extends Component {
 
 			temArr = temArr.slice(startIndex, endIndex);
 
-			for (let index=0; index<temArr.length; index++) {
+			for (let index = 0; index < temArr.length; index++) {
 				let collegeName = `${temArr[index].collegeName} logo`;
 				let logoAPIReturnObj = await API.getLogo(collegeName);
 				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
@@ -152,7 +161,8 @@ class Search extends Component {
 			};
 
 			this.setState({
-				collegesShown: temArr
+				collegesShown: temArr,
+				isCallingAPI: false,
 			});
 		}
 	};
@@ -214,31 +224,42 @@ class Search extends Component {
 
 				<h1 className="text-center">{this.state.notice}</h1>
 
-				<div>
+				<Row>
+					<Col size='md-5' />
+					<Col size="md-2">
+						{this.state.isCallingAPI ? (
+							<Spinner name="ball-spin-fade-loader" color="red" id='spinner' />
+						) : (
+								<h1 />
+							)}
+					</Col>
+					<Col size='md-5' />
+				</Row>
 
-					<div style={{
-						display: 'flex',
-						flexWrap: 'wrap'
-					}}>
-						{this.state.collegesShown.map((college, i) => {
-							return (
+				<Row>
+					<div>
+						<div style={{
+							display: 'flex',
+							flexWrap: 'wrap'
+						}}>
+							{this.state.collegesShown.map((college, i) => {
+								return (
 
-								<Collegecard
-									key={i}
-									image={college.logoUrl}
-									id={college._id}
-									collegeName={college.collegeName}
-									state={college.state}
-									annualAveCost={college.annualAveCost}
-									weblink={college.weblink}
-								/>
+									<Collegecard
+										key={i}
+										image={college.logoUrl}
+										id={college._id}
+										collegeName={college.collegeName}
+										state={college.state}
+										annualAveCost={college.annualAveCost}
+										weblink={college.weblink}
+									/>
+								);
+							})}
+						</div>
 
-							);
-						})}
 					</div>
-
-				</div>
-
+				</Row>
 
 			</Container>
 		);
