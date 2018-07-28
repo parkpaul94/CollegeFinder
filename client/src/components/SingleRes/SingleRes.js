@@ -8,7 +8,7 @@ const SingleRes = (props) => (
     <Container>
       <Row>
         <Col size="md-3">
-          <Thumbnail src={'' || "https://placehold.it/600x600"} />
+          <Thumbnail src={props.image || "https://placehold.it/600x600"} />
         </Col>
         <Col size="md-3">
           <h1>{props.collegeName}</h1>
@@ -23,7 +23,7 @@ const SingleRes = (props) => (
       <Row>
         <Col size='md-3'>
         <h1>Average Annual Cost</h1>
-        <h2> $$ {props.annualAveCost}</h2>
+        <h2> $ {props.annualAveCost}</h2>
         </Col>
         <Col size='md-3'>
         <h1>Graduation Rate</h1>
@@ -36,15 +36,15 @@ const SingleRes = (props) => (
         <h3>3.{props.popularprogram}</h3>
         </Col>
       </Row>
-      <Row><Col size='md-12'><h1>Tution</h1></Col></Row>
+      <Row><Col size='md-12'><h1>Tuition</h1></Col></Row>
       <Row>
         <Col size='md-6'>
-        <h1>In-State Tution</h1>
-        <h2>$${props.annualInCost}</h2>
+        <h1>In-State Tuition</h1>
+        <h2>${props.annualInCost}</h2>
         </Col>
         <Col size='md-6'>
-        <h1>Out-State Tution</h1>
-        <h2>$${props.annualOutCost}</h2>
+        <h1>Out-State Tuition</h1>
+        <h2>${props.annualOutCost}</h2>
         </Col>
       </Row>
     </Container>
