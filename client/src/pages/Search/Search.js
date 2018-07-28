@@ -109,11 +109,11 @@ class Search extends Component {
 			let currArr = temArr.slice(startIndex, endIndex);
 			console.log(currArr);
 
-			for (let index = 0; index < temArr.length; index++) {
-				let collegeName = `${temArr[index].collegeName} logo`;
+			for (let index = 0; index < currArr.length; index++) {
+				let collegeName = `${currArr[index].collegeName} logo`;
 				let logoAPIReturnObj = await API.getLogo(collegeName);
 				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
-				temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
+				currArr[index] = Object.assign(currArr[index], { 'logoUrl': collegeLogoURL })
 			};
 
 			this.setState({
