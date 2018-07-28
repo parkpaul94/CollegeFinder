@@ -13,7 +13,8 @@ class Search extends Component {
 		cardsPerPage: 0,
 		collegesShown: [],
 		searchTerm: '',
-		notice: ''
+		notice: '',
+		img:''
 	}
 
 	componentDidMount() {
@@ -28,7 +29,8 @@ class Search extends Component {
 			cardsPerPage: 9,
 			collegesShown: [],
 			searchTerm: '',
-			notice: 'Please click to search for colleges'
+			notice: 'Please click to search for colleges',
+			img:''
 		});
 
 		if (this.state.colleges.length === 0) {
@@ -223,7 +225,7 @@ class Search extends Component {
 
 								<Collegecard
 									key={i}
-									img={college.logoUrl}
+									image={college.logoUrl}
 									id={college._id}
 									collegeName={college.collegeName}
 									state={college.state}
