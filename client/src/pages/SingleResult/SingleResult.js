@@ -17,11 +17,16 @@ class SingleResult extends Component{
 	loadDefault = async () => {
 
     const collegeRes = await API.getSingleResult(this.props.match.params.id);
-		const collegeData = collegeRes.data;
+        const collegeData = collegeRes.data;
+        let collegeName = `${collegeRes.data.collegeName}logo`;
+        let logoAPIReturnObj = await API.getLogo(collegeName);
+        let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
+        Object.assign(collegeData,{'logoUrl': collegeLogoURL})
 		console.log(collegeData);
 		this.setState({
 			college: collegeData
-    });
+        });
+
     this.setState({hasResult:true});
 
 	};
@@ -58,6 +63,8 @@ class SingleResult extends Component{
                       annualOutCost={this.state.college.annualOutCost}
                       latitude={this.state.college.location.lat}
                       longitude={this.state.college.location.lon}
+                      image={this.state.college.logoUrl}
+
                       />
                 </Container>
               )}

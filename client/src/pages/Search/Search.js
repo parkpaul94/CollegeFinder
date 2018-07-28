@@ -157,6 +157,7 @@ class Search extends Component {
 				let collegeName = `${temArr[index].collegeName} logo`;
 				let logoAPIReturnObj = await API.getLogo(collegeName);
 				let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
+				console.log("hello"+collegeLogoURL);
 				temArr[index] = Object.assign(temArr[index], { 'logoUrl': collegeLogoURL })
 			};
 
@@ -195,32 +196,6 @@ class Search extends Component {
 
 				</Row>
 
-				<Row>
-					<Col size='md-3'>
-					</Col>
-					<Col size="md-3">
-						<Button
-							onClick={this.handlePreviousPageSubmit}
-							type="sucess"
-							className="input-lg"
-						>
-							Previous Page
-					  </Button>
-					</Col>
-					<Col size="md-3">
-
-						<Button
-							onClick={this.handleNextPageSubmit}
-							type="success"
-							className="input-lg"
-						>
-							Next Page
-					  </Button>
-					</Col>
-					<Col size='md-3'>
-					</Col>
-
-				</Row>
 
 				<h1 className="text-center">{this.state.notice}</h1>
 
@@ -244,27 +219,56 @@ class Search extends Component {
 						}}>
 							{this.state.collegesShown.map((college, i) => {
 								return (
-
 									<Collegecard
-										key={i}
-										image={college.logoUrl}
-										id={college._id}
-										collegeName={college.collegeName}
-										state={college.state}
-										annualAveCost={college.annualAveCost}
-										weblink={college.weblink}
+									key={i}
+									image={college.logoUrl}
+									id={college._id}
+									collegeName={college.collegeName}
+									state={college.state}
+									annualAveCost={college.annualAveCost}
+									weblink={college.weblink}
 									/>
+								
 								);
 							})}
 						</div>
 
 					</div>
 				</Row>
-
+					{this.state.collegesShown.length? (
+					<Row>
+						<Col size='md-3'>
+						</Col>
+						<Col size="md-3">
+							<Button
+								onClick={this.handlePreviousPageSubmit}
+								type="sucess"
+								className="input-lg"
+							>
+								Previous Page
+						</Button>
+						</Col>
+						<Col size="md-3">
+					
+							<Button
+								onClick={this.handleNextPageSubmit}
+								type="success"
+								className="input-lg"
+							>
+								Next Page
+						</Button>
+						</Col>
+						<Col size='md-3'>
+						</Col>
+					
+					</Row>
+						) : (
+								<h1/>
+							)}
 			</Container>
 		);
 	}
-
+	
 };
 
 
