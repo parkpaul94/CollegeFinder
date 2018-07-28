@@ -56,18 +56,17 @@ class Search extends Component {
 
 		console.log(temArr);
 
-		let collegeName = `${temArr[0].collegeName} logo`;
-		let collegeLogoURL = await API.getLogo(collegeName);
-		console.log(collegeLogoURL)
+		temArr.map( async function (ele, index){
+			let collegeName = `${temArr[index].collegeName} logo`;
+			let logoAPIReturnObj = await API.getLogo(collegeName);
+			let collegeLogoURL = logoAPIReturnObj.data.thumbnailUrl;
+			temArr[index] = Object.assign(temArr[index], {'logoUrl': collegeLogoURL})
+		})
 
-		// console.log('Clicked');
+		this.setState({
+			collegesShown: temArr
+		});
 
-		// const collegeRes = await API.getAll();
-		// const collegeData = collegeRes.data;
-		// console.log(collegeData);
-		// this.setState({
-		// 	colleges: collegeData.dbModel,
-		// })
 	};
 
 	render() {
@@ -98,13 +97,13 @@ class Search extends Component {
 				</Row>
 
 				<div>
-					{!this.state.colleges.length ? (
+					{!this.state.collegesShown.length ? (
 						<h1 className="text-center">Please Search for Colleges</h1>
 					) : (<div style={{
 						display: 'flex',
 						flexWrap: 'wrap'
 					}}>
-						{this.state.colleges.map((college, i) => {
+						{this.state.collegesShown.map((college, i) => {
 							return (
 
 								<Collegecard
